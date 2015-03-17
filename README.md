@@ -34,7 +34,7 @@ pyufp
 
 ## 사용 환경
 
-Linux / Unix
+Linux / Unix / MaxOS / POSIX 계열 
 
 ## 사용예
 
@@ -133,4 +133,4 @@ $ sudo pip install ufp
 
 ## 소스 코드
 
-소스 코드는 <https://github.com/Thestars3/pyufp>에 올려져 있습니다.
+소스 코드는 https://github.com/Thestars3/pyufp 에 올려져 있습니다.

@@ -23,3 +23,6 @@ __status__ = "Production"
 __package__ = str('ufp')
 
 from .ufp import *
+
+#하위 호환성 유지를 위한 설정
+from . import _compatibleness

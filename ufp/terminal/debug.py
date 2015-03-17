@@ -3,10 +3,15 @@
 
 from __future__ import unicode_literals, absolute_import, division, print_function
 import __builtin__ as builtins
-
-from . import color as _p_color
+import ANSIColors
 
 def print(*objs) :
-	builtins.print('{0}[디버그]{1} '.format(_p_color.bak.red, _p_color.reset), end='');
+	"""
+	@brief 디버깅 메시지를 터미널에 출력합니다.
+	@details 빨간색으로 강조된 '[디버그]' 문자열 뒤에 주어진 objs가 출력되고 줄바꿈됩니다.
+	@link http://pythonhosted.org/ANSIColors-balises/ANSIColors.html ANSIColors Module — ANSIColors-balises public documentation
+	"""
+	buffer = ANSIColors.sprint('<Red>[디버그]<reset> ')
+	builtins.print(buffer, end='');
 	builtins.print(*objs);
 	pass

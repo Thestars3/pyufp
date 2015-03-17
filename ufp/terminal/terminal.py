@@ -3,11 +3,16 @@
 
 from __future__ import unicode_literals, absolute_import, division, print_function
 import sys
+import ANSIColors
 
 __all__ = ['feed', 'pause']
 
 def feed(*msg) :
-	sys.stdout.write("\r\033[K")
+	"""
+	@brief 
+	@param msg, ... 화면에 출력한 문자열 또는 출력 옵션 설정
+	"""
+	ANSIColors.clearLine()
 	print(*msg, end='')
 	sys.stdout.flush()
 	pass
