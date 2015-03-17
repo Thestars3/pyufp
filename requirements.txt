@@ -1,0 +1,8 @@
+requests
+ANSIColors-balises
+PyQt4
+trashcli
+pillow
+chardet
+tidylib
+pattern

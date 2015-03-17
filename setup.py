@@ -1,37 +1,56 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
-from distutils.core import setup
 import os
+import re
+
+try:
+	from setuptools import setup
+except ImportError:
+	from distutils.core import setup
 
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+	return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+version = ''
+with open('ufp/__init__.py', 'r') as fd:
+	reg = re.compile(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]')
+	for line in fd:
+		m = reg.match(line)
+		if m:
+			version = m.group(1)
+			break
+		pass
+	pass
+
+if not version:
+    raise RuntimeError('Cannot find version information')
 
 setup(
 	name             = 'ufp',
-	version          = read('version').strip(),
+	version          = version,
 	author           = '별님',
 	author_email     = 'w7dn1ng75r@gmail.com',
 	url              = 'http://thestars3.tistory.com/',
 	description      = 'ufp 라이브러리 python 버전. 각종, 편리한 함수들의 모음.',
-	packages         = ['ufp'],
+	packages         = [
+			'ufp',
+			'ufp._compatibleness',
+			'ufp._compatibleness.terminal',
+			'ufp._compatibleness.terminal.color',
+			'ufp.gui',
+			'ufp.terminal',
+		],
     package_dir      = {'ufp': 'ufp'},
     package_data     = {
-		'info': [
-			'version',
+		'': [
 			'README.md',
+			'AUTHORS',
+			'COPYING'
 			]
 		},
-	install_requires = [
-		'requests',
-		'ANSIColors-balises',
-		'PyQt4',
-		'trashcli',
-		'pillow',
-		'chardet',
-		'pattern',
-		'tidylib'
-		],
+	zip_safe         = False,
+	install_requires = [],
 	license          = "GPL v3.0",
 	keywords         = ["path", "web", "html", "string", "image", "gui", "termianl"],
 	long_description = read('README.md'),
@@ -53,5 +72,6 @@ setup(
 		"License :: OSI Approved :: GNU General Public License (GPL)",
 		],
 	download_url     = "https://github.com/Thestars3/pyufp/releases",
-	platforms        = ['Unix', 'POSIX', 'MacOS']
+	platforms        = ['Unix', 'POSIX', 'MacOS'],
+	include_package_data = True, # True : MANIFEST.in is used
 	)

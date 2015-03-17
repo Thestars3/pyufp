@@ -9,6 +9,8 @@
 /memo.txt
 /dist
 /MANIFEST
+/ufp.egg-info
+/build
 
 #특정 파일들을 무시하지 않음.
 !.gitignore
