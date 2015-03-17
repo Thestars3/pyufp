@@ -120,10 +120,10 @@ u"Licenses\n- GNU Project - Free Software Foundation\n\n\n ...
 
 ## 설치 방법
 
-- 다음 패키지를 설치하십시오. w3m, kate, ghostscript, zenity, python-qt4
+- 다음 패키지를 설치하십시오. w3m, kate, ghostscript, zenity, python-qt4, python-tidylib
 ```sh
-$ sudo apt-get install w3m kate ghostscript zenity python-qt4 #데비안 계열인 경우
-$ sudo yum install w3m kate ghostscript zenity python-qt4 #레드헷 계열인 경우
+$ sudo apt-get install w3m kate ghostscript zenity python-qt4 python-tidylib #데비안 계열인 경우
+$ sudo yum install w3m kate ghostscript zenity python-qt4 python-tidylib #레드헷 계열인 경우
 ```
 
 - 인스톨

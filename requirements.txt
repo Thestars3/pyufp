@@ -1,7 +1,6 @@
 requests
 ANSIColors-balises
-trashcli
+trash-cli
 pillow
 chardet
-tidylib
 pattern
