@@ -3,13 +3,15 @@
 
 from __future__ import unicode_literals, absolute_import, division, print_function
 import subprocess
+import os
 
 class Notepad(object):
 	def open(self):
 		"""
 		@brief 메모창을 엽니다.
 		"""
-		self._process = subprocess.Popen(['kate', '--stdin'], stdin=subprocess.PIPE)
+		self._devnull = open(os.devnull, 'w')
+		self._process = subprocess.Popen(['kate', '--stdin'], stdin=subprocess.PIPE, stdout=self._devnull, stderr=self._devnull)
 		pass
 	
 	def write(self, content):
@@ -18,12 +20,14 @@ class Notepad(object):
 		@param content 쓸 내용
 		"""
 		self._process.stdin.write(content)
+		self._process.stdin.close()
 		pass
 	
 	def close(self):
 		"""
 		@brief 메모창을 닫습니다.
 		"""
+		self._devnull.close()
 		self._process.kill()
 		pass
 	
