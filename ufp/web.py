@@ -51,6 +51,7 @@ def trimFilename(filename, **options):
 		fromEncoding = None
 	else:
 		fromEncoding = options[u'from_encoding']
+		pass
 	
 	#url 디코딩
 	filename = urllib.unquote(filename)

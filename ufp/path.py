@@ -118,8 +118,9 @@ def listdir(path, **options):
 				if p.search(filename) and not options['patternReverse']:
 					listdir.append(filename)
 					break
+				
 				#패턴 역전 옵션이 켜진 경우
-				elif options['patternReverse']:
+				if options['patternReverse']:
 					listdir.append(filename)
 					break
 				pass
@@ -312,7 +313,7 @@ def filename(filePath) :
 	result = rx.search(filePath)
 	if not result:
 		return unicode()
-		
+	
 	nameSpace = result.group('name_space');
 	if nameSpace :
 		return nameSpace;

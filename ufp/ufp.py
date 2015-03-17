@@ -4,9 +4,34 @@
 from __future__ import unicode_literals, absolute_import, division, print_function
 from trashcli.trash import TrashPutCmd
 import io
+import chardet
+import HTMLParser
+import re
 
-__all__ = ['trashPut']
+__all__ = ['trashPut', 'cleanSubtitle']
 
+def cleanSubtitle(content):
+	"""
+	입력되는 content는 인코딩되지 않은 바이너리 또는 str, unicode여야 합니다.
+	오직, smi, ass 파일만 지원합니다.
+	mplayer에서 일부 동영상의 자막이 인식되지 않는 문제를 해결해줍니다.
+	자막 깨짐 현상 해결(대신 mplayer의 기본 인코딩은 utf8이여야 합니다).
+	자막에 존재하는 html 이스케이프된 문자열을 정상적으로 출력되도록 수정합니다.
+	변환된 자막 내용을 유니코드 문자열 타입으로 반환합니다.
+	변환 결과가 잘못 될 수도 있습니다.
+	"""
+	if not isinstance(content, unicode):
+		encoding = chardet.detect(content)['encoding']
+		content = content.decode(encoding, errors=replace)
+		pass
+	
+	#&#[0-9]+; 이스케이프 해제
+	unescape = HTMLParser.HTMLParser().unescape
+	buffer = lambda m: unescape(m.group(0))
+	content = re.sub('&#\d+;', buffer, content)
+	
+	return content
+	
 def trashPut(target):
 	"""
 	@brief 대상을 휴지통에 버립니다.

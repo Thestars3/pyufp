@@ -55,7 +55,7 @@ setup(
 		},
 	zip_safe         = False,
 	install_requires = install_requires,
-	license          = "GPL v3.0",
+	license          = "GPL v3",
 	keywords         = ["path", "web", "html", "string", "image", "gui", "termianl"],
 	long_description = read('README.md'),
 	classifiers      = [
@@ -73,7 +73,7 @@ setup(
 		"Operating System :: Unix",
 		"Operating System :: POSIX",
 		"Operating System :: MacOS",
-		"License :: OSI Approved :: GNU General Public License (GPL)",
+		"License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 		],
 	download_url     = "https://github.com/Thestars3/pyufp/releases",
 	platforms        = ['Unix', 'POSIX', 'MacOS'],
