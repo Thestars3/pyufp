@@ -1,6 +1,5 @@
 requests
 ANSIColors-balises
-PyQt4
 trashcli
 pillow
 chardet

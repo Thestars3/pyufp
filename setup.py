@@ -3,6 +3,7 @@
 
 import os
 import re
+import os.path
 
 try:
 	from setuptools import setup
@@ -24,7 +25,10 @@ with open('ufp/__init__.py', 'r') as fd:
 	pass
 
 if not version:
-    raise RuntimeError('Cannot find version information')
+	raise RuntimeError('Cannot find version information')
+
+buffer = read(os.path.join(os.path.dirname(__file__), 'requirements.txt'))
+install_requires = filter(lambda x: x != '', buffer.split('\n'))
 
 setup(
 	name             = 'ufp',
@@ -50,7 +54,7 @@ setup(
 			]
 		},
 	zip_safe         = False,
-	install_requires = [],
+	install_requires = install_requires,
 	license          = "GPL v3.0",
 	keywords         = ["path", "web", "html", "string", "image", "gui", "termianl"],
 	long_description = read('README.md'),

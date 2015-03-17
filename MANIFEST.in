@@ -1,1 +1,5 @@
-include README.md MANIFEST.in changelog.md AUTHORS COPYING requirements.txt
+include README.md
+include changelog.md
+include AUTHORS
+include COPYING
+include requirements.txt
