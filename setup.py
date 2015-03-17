@@ -9,13 +9,19 @@ def read(fname):
 
 setup(
 	name             = 'ufp',
-	version          = read('./version'),
+	version          = read('version').strip(),
 	author           = '별님',
 	author_email     = 'w7dn1ng75r@gmail.com',
 	url              = 'http://thestars3.tistory.com/',
-	description      = 'ufp Python 버전',
+	description      = 'ufp 라이브러리 python 버전. 각종, 편리한 함수들의 모음.',
 	packages         = ['ufp'],
     package_dir      = {'ufp': 'ufp'},
+    package_data     = {
+		'info': [
+			'version',
+			'README.md',
+			]
+		},
 	install_requires = [
 		'requests',
 		'ANSIColors-balises',
@@ -28,9 +34,10 @@ setup(
 		],
 	license          = "GPL v3.0",
 	keywords         = ["path", "web", "html", "string", "image", "gui", "termianl"],
-	long_description = read('./README.md'),
+	long_description = read('README.md'),
 	classifiers      = [
-		"Programming Language :: Python :: 2",
+		"Programming Language :: Python :: 2 :: Only",
+		"Programming Language :: Python :: 2.7",
 		"Intended Audience :: Developers",
 		"Development Status :: 5 - Production/Stable",
 		"Environment :: X11 Applications",

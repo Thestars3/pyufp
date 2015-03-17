@@ -20,7 +20,6 @@ class PulseProgress(QObject):
 	
 	@pyqtSlot()
 	def close(self):
-		#self._zenity.communicate('100')
 		self._zenity.kill()
 		pass
 	
