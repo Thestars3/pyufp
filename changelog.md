@@ -47,7 +47,7 @@
 
 + 설치 파일 오류 수정
 
-#### v1.1.0
+### v1.1.0
 
 + 자막 파일을 깨끗하게 정리하는 함수를 추가
 
@@ -55,3 +55,8 @@
 
 + ufp.gui.Notepad 사용시, 창이 무한히 대기하는 현상 수정.
 + ufp.gui 모듈의 PulseProgress, Notepad 사용시 터미널에 불필요한 출력이 발생하지 않도록 수정.
+
+#### v1.1.2
+
++ ufp.image 모듈의 mostPopularEdgeColor, trim 함수에서 PIL.Image L 모드의 이미지를 처리 할 수 있도록 개선
++ image 모듈의 RGB_MIN_VALUE, RGB_MAX_VALUE, GRAYSCALE_MIN_VALUE, GRAYSCALE_MAX_VALUE 상수를 앞으로 사용하지 않을 것임. 이 변수들을 호환성 유지 부로 이동시킴.
