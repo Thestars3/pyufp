@@ -8,7 +8,7 @@ import os
 class Notepad(object):
 	def open(self):
 		"""
-		@brief 메모창을 엽니다.
+		메모창을 엽니다.
 		"""
 		self._devnull = open(os.devnull, 'w')
 		self._process = subprocess.Popen(['kate', '--stdin'], stdin=subprocess.PIPE, stdout=self._devnull, stderr=self._devnull)
@@ -16,8 +16,9 @@ class Notepad(object):
 	
 	def write(self, content):
 		"""
-		@brief 메모에 내용을 씁니다.
-		@param content 쓸 내용
+		메모에 내용을 씁니다.
+		
+		:param content: 쓸 내용
 		"""
 		self._process.stdin.write(content)
 		self._process.stdin.close()
@@ -25,7 +26,7 @@ class Notepad(object):
 	
 	def close(self):
 		"""
-		@brief 메모창을 닫습니다.
+		메모창을 닫습니다.
 		"""
 		self._devnull.close()
 		self._process.kill()
@@ -34,9 +35,10 @@ class Notepad(object):
 	@classmethod
 	def show(cls, content):
 		"""
-		@brief 주어진 내용을 보여줍니다.
-		@param content 보여줄 내용
-		@return 객체를 반환합니다.
+		주어진 내용을 보여줍니다.
+		
+		:param content: 보여줄 내용
+		:return: 객체를 반환합니다.
 		"""
 		notepad = cls()
 		notepad.open()

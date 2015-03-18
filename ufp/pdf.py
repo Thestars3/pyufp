@@ -6,14 +6,44 @@ import subprocess
 
 def toBmp(pdf, format='BMP32B', dpi=200):
 	"""
-	@brief pdf 파일을 bmp로 바꾸어 저장합니다.
+	pdf 파일을 bmp로 바꾸어 저장합니다.
 	
-	@note 참조 :\n
-		고스트 스크립트 문서 : http://www.ghostscript.com/doc/current/Readme.htm
+	다음과 같은 식으로 사용합니다.
 	
-	@param pdf pdf 바이너리 데이터
+	.. code-block:: python
+	
+		import pyPdf
+		from io import BytesIO
+		import ufp.pdf
+		
+		#PDF 파일을 준비
+		buffer = file(srcPath, 'rb')
+		pdf = pyPdf.PdfFileReader(buffer)
+		
+		#각 페이지 마다
+		for pageNumber in xrange(pdf.getNumPages()):
+			#현재 페이지의 pdf 데이터를 추출
+			page = pdf.getPage(pageNumber)
+			pdfFileWriter = pyPdf.PdfFileWriter()
+			pdfFileWriter.addPage(page)
+			with BytesIO() as outputStream:
+				pdfFileWriter.write(outputStream)
+				pageBinary = outputStream.getvalue()
+				pass
+			
+			#PDF를 BMP(24-bit RGB Color)로 변환
+			imageBinary = ufp.pdf.toBmp(pageBinary, format='BMP16M', dpi=200)
+			
+			#저장
+			with open('{0}.bmp'.format(pageNumber), 'w') as f:
+				f.write(imageBinary)
+			pass
+	
+	.. 고스트 스크립트 문서 : http://www.ghostscript.com/doc/current/Readme.htm
+	
+	:param pdf: pdf 바이너리 데이터.
 		오직 낱장(1 페이지)만 존재하는 pdf 데이터여야 합니다.
-	@param format 출력 포멧\n
+	:param format: 출력 포멧.\n
 		BMP16M: 24-bit RGB Color\n
 		BMPMONO: Black-and-White Color\n
 		BMPGRAY: Grayscale Color\n
@@ -22,11 +52,10 @@ def toBmp(pdf, format='BMP32B', dpi=200):
 		BMP16: 4-bit Color\n
 		BMP256: 8-bit Color\n
 		BMP32B: 32-bit RGBA Color (기본값)
-	@param dpi DPI\n
-		기본값은 200DPI입니다.\n
+	:param dpi: DPI.
+		기본값은 200DPI입니다.
 		양의 정수만을 취합니다.
-	
-	@return BMP 이미지 바이너리 데이터
+	:return: BMP 이미지 바이너리 데이터
 	"""
 	cmd = [
 		'gs',

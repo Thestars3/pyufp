@@ -7,7 +7,24 @@ import subprocess
 import os
 
 class PulseProgress(QObject):
+	"""
+	사용 예제는 다음과 같다.
+		
+	.. code-block:: python
+
+		>>> import ufp.gui
+		>>> import time
+		>>> a = ufp.gui.PulseProgress('title', 'message')
+		>>> a.open(); time.sleep(3); a.close()
+		
+	"""
 	def __init__(self, title, message):
+		"""
+		진행 표시창을 초기화합니다.
+		
+		:param title: 제목
+		:param message: 메시지
+		"""
 		super(PulseProgress, self).__init__()
 		self.title = title
 		self.message = message
@@ -15,6 +32,9 @@ class PulseProgress(QObject):
 	
 	@pyqtSlot()
 	def open(self):
+		"""
+		진행 표시창을 엽니다.
+		"""
 		self._devnull = open(os.devnull, 'w')
 		self._zenity = subprocess.Popen(['zenity', '--progress', '--text', self.message, '--pulsate', '--no-cancel', '--auto-close', '--title', self.title], stdin=subprocess.PIPE, stdout=self._devnull, stderr=self._devnull)
 		self._zenity.stdin.write('y')
@@ -22,6 +42,9 @@ class PulseProgress(QObject):
 	
 	@pyqtSlot()
 	def close(self):
+		"""
+		진행 표시창을 닫습니다.
+		"""
 		self._devnull.close()
 		self._zenity.kill()
 		pass

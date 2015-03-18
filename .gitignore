@@ -11,7 +11,9 @@
 /MANIFEST
 /ufp.egg-info
 /build
-/documents/_*
+/docs/_build/*
+/docs/_static/*
+/docs/_templates/*
 
 #특정 파일들을 무시하지 않음.
 !.gitignore

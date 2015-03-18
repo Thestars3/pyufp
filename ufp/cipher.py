@@ -3,9 +3,12 @@
 
 from __future__ import unicode_literals, absolute_import, division, print_function
 
-def unpadPkcs5(s):
+def unpadPkcs5(data):
 	"""
-	@brief PKCS#5 표준 패딩을 제거한다.
+	PKCS#5 표준 패딩을 제거한다.
+	
+	:param data: 입력 데이터
+	:returns: 패딩이 제거된 데이터
 	"""
-	return s[0:-ord(s[-1])]
+	return data[0:-ord(data[-1])]
 	

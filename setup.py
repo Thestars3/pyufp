@@ -4,6 +4,10 @@
 import os
 import re
 import os.path
+import sys
+
+if sys.version_info >= (3,):
+	raise RuntimeError('this module not supporting Python 3 yet.')
 
 try:
 	from setuptools import setup
@@ -27,6 +31,14 @@ with open('ufp/__init__.py', 'r') as fd:
 if not version:
 	raise RuntimeError('Cannot find version information')
 
+extra = dict()
+#일부 외부 의존 패키지 때문에 사용 할 수  없음.
+#if sys.version_info >= (3,):
+    #extra['use_2to3'] = True
+    ##extra['convert_2to3_doctests'] = ['src/your/module/README.txt']
+    ##extra['use_2to3_fixers'] = ['your.fixers']
+    #pass
+
 buffer = read(os.path.join(os.path.dirname(__file__), 'requirements.txt'))
 install_requires = filter(lambda x: x != '', buffer.split('\n'))
 
@@ -48,7 +60,7 @@ setup(
     package_dir      = {'ufp': 'ufp'},
     package_data     = {
 		'': [
-			'README.md',
+			'README.rst',
 			'AUTHORS',
 			'COPYING'
 			]
@@ -57,10 +69,10 @@ setup(
 	install_requires = install_requires,
 	license          = "GPL v3",
 	keywords         = ["path", "web", "html", "string", "image", "gui", "termianl"],
-	long_description = read('README.md'),
+	long_description = read('README.rst'),
 	classifiers      = [
-		"Programming Language :: Python :: 2 :: Only",
 		"Programming Language :: Python :: 2.7",
+		"Programming Language :: Python :: 2 :: Only",
 		"Intended Audience :: Developers",
 		"Development Status :: 5 - Production/Stable",
 		"Environment :: X11 Applications",
@@ -78,4 +90,5 @@ setup(
 	download_url     = "https://github.com/Thestars3/pyufp/releases",
 	platforms        = ['Unix', 'POSIX', 'MacOS'],
 	include_package_data = True, # True : MANIFEST.in is used
+	**extra
 	)

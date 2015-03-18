@@ -14,28 +14,29 @@ from . import string as _p_string
 
 def trimFilename(filename, **options):
 	"""
-	@brief 웹에서 다운받은 파일의 이름을 손질함.
+	웹에서 다운받은 파일의 이름을 손질함.
 	
-	@details \n
-		url coding 풀기\n
-		사용불가능한 문자를 대체문자로 치환\n
-		웹에서의 공백치환을 감지하고 경우에 따라 해제\n
-		파일 이름을 다듬기\n
-		UHC로 변환가능한 인코딩은 변환
+	다음 작업을 수행합니다:
 	
-	@warning 인코딩 변환이 잘못될수도 있습니다.
+		- url coding 풀기
+		- 사용불가능한 문자를 대체문자로 치환
+		- 웹에서의 공백치환을 감지하고 경우에 따라 해제
+		- 파일 이름을 다듬기
+		- UHC로 변환가능한 인코딩은 변환
 	
-	@param filename 파일명 유니코드 문자열
-	@param from_encoding 입력 인코딩\n
+	.. caution:: 인코딩 변환이 잘못될수도 있습니다.
+	
+	:param filename: 파일명 유니코드 문자열
+	:param from_encoding: 입력 인코딩.\n
 		'auto' : 자동으로 인코딩을 파악합니다. \n
 		False : 인코딩을 변환하지 않습니다. (기본)\n
 		기타('utf8', 'uhc', ...)
-	@param consider_extension 확장자 고려 여부\n
+	:param consider_extension: 확장자 고려 여부\n
 		True: 확장자를 고려하여 작업합니다.\n
 		False: 확장자를 고려하지 않습니다. (기본)
 		
-	@return 변환된 문자열
-	@return u'Unknown' : 결과물이 공백이 될 경우 반환됩니다.
+	:return: 변환된 문자열
+	:return: u'Unknown'. 결과물이 공백이 될 경우 공백 대신 이 문자열이 반환됩니다.
 	"""
 	#옵션 초기값 설정
 	options.setdefault(u'consider_extension', False)
@@ -104,9 +105,11 @@ def trimFilename(filename, **options):
 	
 def dequoteJsStr(jsStr) :
 	"""
-	@brief 자바 스크립트를 위해 콰우팅된 문자열을 콰우팅 해제시킵니다.
-	@details ex) abc\'asd\' -> abc'asd'
-	@return 디콰우팅 된 문자열
+	자바 스크립트를 위해 콰우팅된 문자열을 콰우팅 해제시킵니다.
+	
+	:param jsStr: 콰우팅된 자바 스크립트 문자열
+	:return: 디콰우팅 된 문자열.\n
+		ex) abc\'asd\' -> abc'asd'
 	"""
 	REGEXS = [
 		(r'\\', '\\'),
@@ -121,15 +124,15 @@ def dequoteJsStr(jsStr) :
 
 def loadNetscapeCookie(session, cookiePath):
 	"""
-	@brief Netscape 타입의 쿠키를 가져와서 requests session에 설정합니다.
+	Netscape 타입의 쿠키를 가져와서 requests session에 설정합니다.
 	
-	@remark 쿠키 헤더\n
-		# Netscape HTTP Cookie File\n
-		# http://www.netscape.com/newsref/std/cookie_spec.html\n
-		# This is a generated file!  Do not edit.
+	.. @remark 쿠키 헤더\n
+	  # Netscape HTTP Cookie File\n
+	  # http://www.netscape.com/newsref/std/cookie_spec.html\n
+	  # This is a generated file!  Do not edit.
 	
-	@param session requests 세션 객체
-	@param cookiePath 쿠키 파일 경로 문자열
+	:param session: requests 세션 객체
+	:param cookiePath: 쿠키 파일 경로 문자열
 	"""
 	#임시 파일 생성
 	tmpCookiePath = tempfile.mkstemp(prefix='.tmp_', suffix='.cookie')[1]

@@ -7,9 +7,13 @@ import ANSIColors
 
 def print(*objs) :
 	"""
-	@brief 디버깅 메시지를 터미널에 출력합니다.
-	@details 빨간색으로 강조된 '[디버그]' 문자열 뒤에 주어진 objs가 출력되고 줄바꿈됩니다.
-	@link http://pythonhosted.org/ANSIColors-balises/ANSIColors.html ANSIColors Module — ANSIColors-balises public documentation
+	디버깅 메시지를 터미널에 출력합니다.
+	
+	빨간색으로 강조된 '[디버그]' 문자열 뒤에 주어진 objs가 출력되고 줄바꿈됩니다.
+	
+	.. @link http://pythonhosted.org/ANSIColors-balises/ANSIColors.html ANSIColors Module — ANSIColors-balises public documentation
+	
+	:param objs: 출력할 오브젝트들
 	"""
 	buffer = ANSIColors.sprint('<Red>[디버그]<reset> ')
 	builtins.print(buffer, end='');
