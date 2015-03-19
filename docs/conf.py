@@ -17,6 +17,39 @@ import sys
 import os
 import shlex
 
+if os.environ.get('READTHEDOCS', None) == 'True':
+	class Mock(object):
+		"""
+		이 부분은 Sphinx 프로그램의 설계상의 문제로 인해, 문서화 할 수 없었습니다. 이 부분의 내용을 확인하려면, 소스코드를 확인해보거나, 직접 문서를 컴파일하십시오. 문서를 컴파일하여 보려면 다음 과정을 수행하면 됩니다. 소스코드를 다운받고, 설치하십시오. 그 뒤 폴더 내의 docs 폴더로 이동하여 make html 명령을 통해 문서를 만드십시오. 생성된 문서는 docs/_build/html/index.html에 있습니다.
+		
+		.. 
+			Mock modules.
+			Taken from
+			http://read-the-docs.readthedocs.org/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
+			with some slight changes.
+		"""
+		def __init__(self, *args, **kwargs):
+			pass
+
+		def __call__(self, *args, **kwargs):
+			return self.__class__()
+
+		def __getattr__(self, attribute):
+			if attribute in ('__file__', '__path__'):
+				return os.devnull
+			
+			# return the *class* object here.  Mocked attributes may be used as base class in pyudev code, thus the returned mock object must behave as class, or else Sphinx autodoc will fail to recognize the mocked base class as such, and "autoclass" will become meaningless
+			class NewClass(Mock): pass
+			NewClass.__name__ = attribute
+			return NewClass
+		pass
+	# mock out native modules used throughout pyudev to enable Sphinx autodoc even if these modules are unavailable, as on readthedocs.org
+	MOCK_MODULES = ['tidylib', 'PyQt4', 'PyQt4.QtCore']
+	for modName in MOCK_MODULES:
+		sys.modules[modName] = Mock()
+		pass
+	pass
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -41,7 +74,7 @@ extensions = [
 templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
-source_suffix = ['.rst']
+source_suffix = '.rst'
 
 # The encoding of source files.
 #source_encoding = 'utf-8-sig'

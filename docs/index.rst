@@ -19,7 +19,7 @@ ufp는 사용에 편리한 함수 및 클래스들의 모음입니다.
     :target: https://pypi.python.org/pypi/ufp/
     :alt: License
 
-ufp 모듈을 설치하려면 :doc:`설치 <installation>`_ 문서를 참조하십시오. 소스 코드를 다운 받거나 개발에 참여하려면 다음 페이지를 보십시오: https://github.com/Thestars3/pyufp.
+ufp 모듈을 설치하려면 :doc:`설치 <installation>` 문서를 참조하십시오. 소스 코드를 다운 받거나 개발에 참여하려면 다음 페이지를 보십시오: https://github.com/Thestars3/pyufp.
 
 .. toctree::
    :maxdepth: 2

@@ -3,10 +3,10 @@
 
 from __future__ import unicode_literals, absolute_import, division, print_function
 import subprocess
-import tidylib
 import tempfile
 import os
 import pattern.web
+import tidylib
 
 def clean(html, inputEncoding = "utf8") :
 	"""

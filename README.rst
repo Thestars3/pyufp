@@ -143,7 +143,7 @@ html 문서를 text로 변환
 도움말
 -------------------
 
-다음 문서를 참조 하십시오: `ufp 문서 <http://ufp.readthedocs.org/index.html>`_.
+다음 문서를 참조 하십시오: `ufp 문서 <http://pyufp.readthedocs.org/index.html>`_.
 	
 수정사항
 -------------------
@@ -168,7 +168,7 @@ html 문서를 text로 변환
 설치 방법
 -------------------
 
-`설치 <http://ufp.readthedocs.org/installation.html>`_ 문서를 참조하십시오.
+`설치 <http://pyufp.readthedocs.org/installation.html>`_ 문서를 참조하십시오.
 
 소스 코드
 -------------------

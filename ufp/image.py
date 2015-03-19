@@ -199,7 +199,6 @@ def trim(image, backgroundColor=None, fuzz=0):
 			else:
 				max_ = RGB_COLOR_COUNT
 			offset = - math.trunc(max_*fuzz/100)
-			print(offset)
 			diff = PIL.ImageChops.add(diff, diff, 2.0, offset)
 			pass
 		
