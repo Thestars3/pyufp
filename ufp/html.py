@@ -20,20 +20,20 @@ def clean(html, inputEncoding = "utf8") :
 	  @link http://tidy.sourceforge.net/docs/quickref.html HTML Tidy 설정 옵션 빠른 참조
 	  @link http://countergram.com/open-source/pytidylib/docs/index.html#small-example-of-use Html Tidy에 관한 파이썬 인터페이스 pytidylib.moudule
 	"""
-	tidyOptions = {
-		"output-xhtml": True, #"output-xml" : True
-		"quiet": True,
-		"show-errors": 0,
-		"force-output": True,
-		"numeric-entities": True,
-		"show-warnings": False,
-		"input-encoding": inputEncoding,
-		"output-encoding": "utf8",
-		"indent": False,
-		"tidy-mark": False,
-		"wrap": 0
+	options = {
+		str("output-xhtml"): True, #"output-xml" : True
+		str("quiet"): True,
+		str("show-errors"): 0,
+		str("force-output"): True,
+		str("numeric-entities"): True,
+		str("show-warnings"): False,
+		str("input-encoding"): inputEncoding,
+		str("output-encoding"): "utf8",
+		str("indent"): False,
+		str("tidy-mark"): False,
+		str("wrap"): 0
 		};
-	document, errors = tidylib.tidy_document(html, options = tidyOptions)
+	document, errors = tidylib.tidy_document(html, options=options)
 	return document
 
 def toText(html, converter='pattern.web') :

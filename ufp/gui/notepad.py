@@ -51,7 +51,7 @@ class Notepad(object):
 		"""
 		주어진 내용을 보여줍니다.
 		
-		:param content: 보여줄 내용. :py:func:`~ufp.gui.Notepad.write`의 내용과 같습니다.
+		:param content: 보여줄 내용. :py:func:`~ufp.gui.Notepad.write` 의 내용과 같습니다.
 		:return: 객체를 반환합니다.
 		"""
 		notepad = cls()

@@ -4,7 +4,7 @@
 from __future__ import unicode_literals, absolute_import, division, print_function
 import subprocess
 
-def toBmp(pdf, format='BMP32B', dpi=200):
+def toBmp(pdf, format='bmp32b', dpi=200):
 	"""
 	pdf 파일을 bmp로 바꾸어 저장합니다.
 	
@@ -32,7 +32,7 @@ def toBmp(pdf, format='BMP32B', dpi=200):
 				pass
 			
 			#PDF를 BMP(24-bit RGB Color)로 변환
-			imageBinary = ufp.pdf.toBmp(pageBinary, format='BMP16M', dpi=200)
+			imageBinary = ufp.pdf.toBmp(pageBinary, format='bmp16m', dpi=200)
 			
 			#저장
 			with open('{0}.bmp'.format(pageNumber), 'w') as f:
@@ -44,17 +44,18 @@ def toBmp(pdf, format='BMP32B', dpi=200):
 	:param pdf: pdf 바이너리 데이터.
 		오직 낱장(1 페이지)만 존재하는 pdf 데이터여야 합니다.
 	:param format: 출력 포멧.\n
-		BMP16M: 24-bit RGB Color\n
-		BMPMONO: Black-and-White Color\n
-		BMPGRAY: Grayscale Color\n
-		BMPSEP1:\n
-		BMPSEP8:\n
-		BMP16: 4-bit Color\n
-		BMP256: 8-bit Color\n
-		BMP32B: 32-bit RGBA Color (기본값)
+		bmp16m: 24-bit RGB Color\n
+		bmpmono: Black-and-White Color\n
+		bmpgray: Grayscale Color\n
+		bmpsep1:\n
+		bmpsep8:\n
+		bmp16: 4-bit Color\n
+		bmp256: 8-bit Color\n
+		bmp32b: 32-bit RGBA Color (기본값)
 	:param dpi: DPI.
 		기본값은 200DPI입니다.
 		양의 정수만을 취합니다.
+	:raise Exception: pdf 변환에 문제가 발생했을때.
 	:return: BMP 이미지 바이너리 데이터
 	"""
 	cmd = [
@@ -77,7 +78,9 @@ def toBmp(pdf, format='BMP32B', dpi=200):
 		'-', #입력을 표준입력에서
 		]
 	process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-	bmp = process.communicate(inData)[0]
+	bmp = process.communicate(pdf)[0]
+	if process.returncode != 0:
+		raise Exception('pdf -> bmp 변환에 문제가 있습니다.')
 	
 	return bmp
 	

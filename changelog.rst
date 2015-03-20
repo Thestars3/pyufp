@@ -1,6 +1,15 @@
 ﻿변경사항 (ufp)
 ==============
 
+v1.1.5
+-------
+
++ ufp.web 모듈의 trimFilename 함수에서 발생하던 "AttributeError: 'module' object has no attribute" 오류 수정. [`tb69wn6127`_]
++ ufp.web 모듈의 trimFilename 함수에서 파일 경로에 사용불가능한 문자 치환이 이뤄지지 않던 점 수정. [`tb69wn6127`_]
++ ufp.html 모듈의 clean 함수에서 발생하던 "ValueError: (tidylib) Config: unknown option: s" 오류 수정. [`tb69wn6127`_]
++ ufp.pdf 모듈의 toBmp 함수에서 발생하던 "NameError: global name 'inData' is not defined" 오류 수정. [`tb69wn6127`_]
++ ufp.pdf 모듈의 toBmp 함수에서 변환에 문제가 생겼을시 Exception을 raise하도록 함. [`tb69wn6127`_]
+
 v1.1.4
 -------
 

@@ -68,13 +68,13 @@ def trimFilename(filename, **options):
 	filename = filename.strip()
 	
 	#파일명에 사용불가능한 문자 치환
-	filename = _p_string.replaceSpiecalChar(filename)
+	filename = _p_path.replaceSpiecalChar(filename)
 	
 	#확장자 분리
 	if considerExtension:
-		ext = _p_string.extension(filename)
+		ext = _p_path.extension(filename)
 		if ext:
-			filename = _p_string.filename(filename)
+			filename = _p_path.filename(filename)
 		else:
 			considerExtension = False
 		
