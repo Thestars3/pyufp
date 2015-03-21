@@ -3,6 +3,7 @@
 # 특정 확장자 파일들을 무시
 *.kate-swp
 *.autosave
+*.pyc
 
 # 특정 디렉토리 내 파일들을 무시
 /sync

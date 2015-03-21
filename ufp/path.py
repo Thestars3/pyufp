@@ -16,10 +16,12 @@ def remove(path, force=False):
 	
 	폴더의 경우 재귀적으로 폴더 내용을 삭제한뒤 폴더를 삭제합니다.
 	
-	:param path: 삭제 대상의 경로(unicode)
-	:param force: 오류를 무시할지 여부(bool).\n
+	:param path: 삭제 대상의 경로
+	:type path: unicode
+	:param force: 오류를 무시할지 여부.\n
 		True : 오류를 무시함.\n
 		False : Exception이 발생하면, 그대로 던짐.
+	:type force: bool
 	"""
 	try:
 		if os.path.isdir(path):
@@ -49,11 +51,16 @@ def walk(top, maxDepth=None, onerror=None, followlinks=False):
 		'.', ['ufp'], []
 		
 	:param top: 탐색 대상 경로
+	:type top: unicode
 	:param onerror: 오류가 발생하면, 주어진 주소의 함수를 호출하여 오류 인자를 넘겨줍니다.
+	:type onerror: function
 	:param followlinks: 심볼릭 링크된 경로를 포함하여 탐색합니다.
+	:type followlinks: bool
 	:param maxDepth: 탐색 할 최대 깊이.
 		0이상의 정수여야 함.\n
 		ex) 0 : 지정된 폴더만.
+	:type maxDepth: int
+	:yield: 현재 탐색 중인 위치(unicode), 폴더 이름([unicode, ...]), 파일 이름([unicode, ...])
 	"""
 	top = top.rstrip(os.path.sep)
 	assert os.path.isdir(top)
@@ -70,7 +77,9 @@ def moveAllContent(dirPath, destPath):
 	dirPath에 존재하는 모든 파일을 destPath로 옮깁니다.
 	
 	:param dirPath: 이동 할 대상 파일들이 담긴 폴더
+	:type dirPath: unicode
 	:param destPath: 파일들이 옮겨져갈 위치
+	:type destPath: unicode
 	"""
 	for i in listdir(dirPath, fullpath=True):
 		shutil.move(i, destPath)
@@ -82,8 +91,11 @@ def mtime(path, format):
 	path에 해당하는 파일의 최근 수정 시각을 지정된 format형식으로 작성하여 반환합니다.
 	
 	:param path: 경로 문자열
+	:type path: unicode
 	:param format: 형식 문자열(datetime strftime에서 지원하는 형식)
+	:type format: unicode
 	:return: path에 존재하는 파일의 최근 수정 시각의 format에 지정된 형식
+	:rtype: unicode
 	"""
 	buffer = os.path.getmtime(path)
 	buffer = datetime.fromtimestamp(buffer).strftime(format)
@@ -94,10 +106,12 @@ def pjoin(parentPath, filenames):
 	parentPath를 각 filenames의 아이템과 결합합니다.
 	
 	:param parentPath: 부모 경로
+	:type parentPath: unicode
 	:param filenames: 파일명 리스트.
-		[filename, ...]
+	:type filenames: list(unicode, ...)
 	:return: 결합된 리스트.
 		[parentPath/filename, parentPath/filename, ...]
+	:rtype: list(unicode, ...)
 	"""
 	result = list()
 	for filename in filenames:
@@ -111,6 +125,7 @@ def listdir(path, **options):
 	지정된 폴더에서 pattern에 해당하는 파일 및 폴더의 목록을 가져옵니다.
 	
 	:param path: 목록을 가져올 폴더 경로
+	:type path: unicode
 	:param pattern: 필터 패턴(대소문자를 구분하지 않습니다)\n
 		string : 패턴 문자열\n
 		[string, ...]: 패턴 문자열 리스트\n
@@ -118,13 +133,17 @@ def listdir(path, **options):
 	:param patternReverse: \n
 		True : 필터에 매칭되지 않는 대상만 얻습니다.\n
 		False : 필터에 매칭되는 대상만 얻습니다.
+	:type patternReverse: bool
 	:param fullpath: 반환시 주어진 경로를 포함한 경로를 반환합니다.\n
 		True : [path + filename, ...]\n
 		False : [filename, ...]
+	:type fullpath: bool
 	:param sortKey: 정렬키 함수\n
 		해당 함수에는 전체 경로가 전달 됩니다.
+	:type sortKey: function
 	
 	:return: 필터링된 폴더 내용
+	:rtype: list(unicode, ...)
 	"""
 	options.setdefault('pattern', None)
 	options.setdefault('patternReverse', False)
@@ -183,10 +202,11 @@ def toUrl(path):
 	
 	:param path: 경로 문자열.\n
 		ex) ../home/ufp
+	:type path: unicode
 	:return: file:///형식으로된 주소
+	:rtype: unicode
 	"""
-	buffer = path.encode('utf8')
-	buffer = urllib.pathname2url(buffer)
+	buffer = urllib.pathname2url(str(path))
 	return urlparse.urljoin('file:', buffer)
 
 def replaceSpiecalChar(string, **options) :
@@ -247,8 +267,11 @@ def dirname(path) :
 	만약 'abc'가 주어졌다면, 반환값은 '.'입니다.
 	
 	.. note:: os.path.dirname('asd') -> ''이 되는 문제를 해결하기 위해 만들어졌습니다.
-	:param path: 경로 문자열. 주어지는 값은 유니코드 문자열이여야 함.
-	:return: 부모 경로 문자열
+	
+	:param path: 경로 문자열.
+	:type path: unicode
+	:return: 부모 경로
+	:rtype: unicode
 	"""
 	dirnameRe = re.compile(u'(?P<dirname>^.*)/', re.DOTALL | re.UNICODE).search(path);
 	if dirnameRe :
@@ -276,9 +299,10 @@ def unique(targetPath, spliteExt = True) :
 		./test (d2).file
 	
 	:param targetPath: 주어지는 값은 유니코드 문자열이여야 함.
+	:type targetPath: unicode
 	:return: 만약, 주어진 경로가 충돌하지 않는다면 주어진 경로를 그대로 반환합니다.
 	:return: 만약 주어진 경로의 부모 경로가 존재하지 않는다면, 주어진 문자열 그대로 반환합니다.
-	:return: 유일한 경로
+	:return: 유일한 경로.
 	"""
 	#경로 분할
 	targetDirname = dirname(targetPath);
@@ -352,8 +376,10 @@ def filename(filePath) :
 	파일 경로로 부터 확장자를 제외한 파일명을 추출해냅니다.
 	
 	:param filePath: 주어지는 값은 유니코드 문자열이여야 함.\n
-		예를 들어, `../asd/.qwe.tar.bz2'가 인자로 주어진 다면 반환값은 `.qwe.tar' 입니다.
+		예를 들어, '../asd/.qwe.tar.bz2'가 인자로 주어진 다면 반환값은 '.qwe.tar' 입니다.
+	:type filePath: unicode
 	:return: 파일 이름
+	:rtype: unicode
 	"""
 	rx = re.compile(ur"^(.*/)?(?P<name_space>.+?)?(?P<ext_space>\.[a-z0-9]+)?$", re.DOTALL | re.IGNORECASE | re.UNICODE);
 	
@@ -376,8 +402,10 @@ def extension(fileName) :
 	주어진 파일명의 확장자를 추출합니다.
 	
 	:param fileName: 주어지는 값은 유니코드 문자열이여야 함.
-	:return: `../asd/.qwe'가 인자로 주어진 다면 반환값은 (빈 값) 입니다.
+	:type fileName: unicode
+	:return: '../asd/.qwe'가 인자로 주어진 다면 반환값은 (빈 값) 입니다.
 	:return: 만약 확장자가 없다면, (빈 값)을 리턴합니다.
+	:rtype: unicode
 	"""
 	extRe = re.compile(ur"[^/]+\.(?P<ext>[a-z0-9]+)$", re.DOTALL | re.IGNORECASE | re.UNICODE);
 	result = extRe.search(fileName);

@@ -9,8 +9,9 @@ def removeControlChar(string):
 	제어문자를 제거합니다.
 	
 	:param string: 문자열
+	:type string: unicode
 	
 	:return: 경로 문자가 제거된 문자열
+	:rtype: unicode
 	"""
-	buffer = ''.join(ch for ch in string if unicodedata.category(ch)[0]!="C")
-	return buffer
+	return ''.join(ch for ch in string if unicodedata.category(ch)[0]!="C")

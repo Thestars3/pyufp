@@ -8,7 +8,7 @@
 외부 의존 패키지 설치
 -------------------
 
-ufp 모듈을 사용하기 위해서는 다음 외부 패키지가 필요합니다.
+ufp 모듈을 사용하기 위해서는 다음 외부 패키지가 필요합니다. w3m, kate, ghostscript, zenity, python-qt4, python-tidylib.
 
 데비안 계열인 경우 필요 패키지를 설치하기 위해, 다음 명령을 쉘에서 실행시키십시오.
 
@@ -22,8 +22,7 @@ ufp 모듈을 사용하기 위해서는 다음 외부 패키지가 필요합니�
 
 	$ sudo yum install w3m kate ghostscript zenity python-qt4 python-tidylib
 	
-그외의 경우, 각자의 환경에 알맞는 방법으로 다음 패키지를 설치하십시오. w3m, kate, ghostscript, zenity, python-qt4, python-tidylib
-
+그외의 경우, 각자의 환경에 알맞는 방법으로 패키지를 설치하십시오.
 
 pillow 모듈 설치
 ------------------

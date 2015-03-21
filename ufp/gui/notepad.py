@@ -53,6 +53,7 @@ class Notepad(object):
 		
 		:param content: 보여줄 내용. :py:func:`~ufp.gui.Notepad.write` 의 내용과 같습니다.
 		:return: 객체를 반환합니다.
+		:rtype: :py:class:`~ufp.gui.Notepad`
 		"""
 		notepad = cls()
 		notepad.open()

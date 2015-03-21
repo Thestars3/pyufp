@@ -23,7 +23,9 @@ class PulseProgress(QObject):
 		진행 표시창을 초기화합니다.
 		
 		:param title: 제목
+		:type title: unicode
 		:param message: 메시지
+		:type message: unicode
 		"""
 		super(PulseProgress, self).__init__()
 		self.title = title

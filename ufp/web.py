@@ -27,6 +27,7 @@ def trimFilename(filename, **options):
 	.. caution:: 인코딩 변환이 잘못될수도 있습니다.
 	
 	:param filename: 파일명 유니코드 문자열
+	:type filename: unicode
 	:param from_encoding: 입력 인코딩.\n
 		'auto' : 자동으로 인코딩을 파악합니다. \n
 		False : 인코딩을 변환하지 않습니다. (기본)\n
@@ -34,9 +35,11 @@ def trimFilename(filename, **options):
 	:param consider_extension: 확장자 고려 여부\n
 		True: 확장자를 고려하여 작업합니다.\n
 		False: 확장자를 고려하지 않습니다. (기본)
+	:type consider_extension: bool
 		
 	:return: 변환된 문자열
 	:return: u'Unknown'. 결과물이 공백이 될 경우 공백 대신 이 문자열이 반환됩니다.
+	:rtype: unicode
 	"""
 	#옵션 초기값 설정
 	options.setdefault(u'consider_extension', False)
@@ -59,7 +62,7 @@ def trimFilename(filename, **options):
 	
 	#인코딩 변환
 	if fromEncoding:
-		filename = filename.decode('utf8', errors='replace')
+		filename = filename.decode(fromEncoding, errors='replace')
 	
 	#url 디코딩
 	filename = urllib.unquote(filename)
@@ -108,8 +111,10 @@ def dequoteJsStr(jsStr) :
 	자바 스크립트를 위해 콰우팅된 문자열을 콰우팅 해제시킵니다.
 	
 	:param jsStr: 콰우팅된 자바 스크립트 문자열
+	:type jsStr: unicode
 	:return: 디콰우팅 된 문자열.\n
 		ex) abc\'asd\' -> abc'asd'
+	:rtype: unicode
 	"""
 	REGEXS = [
 		(r'\\', '\\'),
@@ -132,7 +137,9 @@ def loadNetscapeCookie(session, cookiePath):
 	  # This is a generated file!  Do not edit.
 	
 	:param session: requests 세션 객체
+	:type session: requests.sessions.Session
 	:param cookiePath: 쿠키 파일 경로 문자열
+	:type cookiePath: unicode
 	"""
 	#임시 파일 생성
 	tmpCookiePath = tempfile.mkstemp(prefix='.tmp_', suffix='.cookie')[1]

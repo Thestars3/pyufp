@@ -10,10 +10,12 @@ def string(length, chars=_p_string.ascii_letters + _p_string.digits):
 	지정된 길이 만큼의 램덤 문자열을 되돌려줍니다.
 	
 	:param length: 문자열의 길이
-	:param chars: 문자 집합(리스트 형식)\n
+	:type length: int
+	:param chars: 문자 집합\n
 		[a, ..., z, A, ..., Z, ..., 0, ..., 9] (기본값)
-	
+	:type chars: str, list
 	:return: 램덤 문자열
+	:rtype: unicode
 	"""
 	string = unicode()
 	for i in xrange(length):

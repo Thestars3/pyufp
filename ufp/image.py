@@ -32,11 +32,13 @@ def quantizeByImprovedGrayScale(image, colorCount=GRAYSCALE_COLOR_COUNT):
 	  @link http://code.activestate.com/recipes/259112/ Improved Gray Scale Quantization (Python recipe)
 	
 	:raise ValueError: 사용 불가능한 모드의 이미지를 인자로 준 경우
-	:param image: PIL.Image 이미지 객체.
-		이 이미지는 L 모드여야 합니다.
+	:param image: 이미지 객체. 이 이미지는 L 모드여야 합니다.
+	:type image: PIL.Image
 	:param colorCount: 원본의 색상 수.
 		주어진 이미지의 색상 수를 목표로 하는 색상로 맞추는데 사용 할 수도 있습니다. 이 경우, 주어진 모드가 한 채널에서 가질 수 있는 최대 값을 상한선으로 하여, 목표로 하는 색상의 수를 정하십시오.
-	:return: 변경된 PIL.Image 이미지 객체
+	:type colorCount: int
+	:return: 변경된 이미지 객체
+	:rtype: PIL.Image
 	"""
 	if image.mode != 'L':
 		raise ValueError('L 모드의 이미지만 사용 할 수 없습니다.'.format(image.mode))
@@ -71,9 +73,12 @@ def changeColorDepth(image, colorCount):
 	:raise ValueError: 사용 불가능한 모드의 이미지를 인자로 준 경우
 	:param image: PIL.Image 객체.
 		L, RGB, RGBA 모드의 이미지를 처리 할 수 있습니다.
+	:type image: PIL.Image
 	:param colorCount: 결과물의 색상 수.
 		주어진 모드가 한 채널에서 가질 수 있는 최대 값을 상한선으로 하여, 목표로 하는 색상의 수를 정하십시오.
+	:type colorCount: int
 	:return: 변경된 PIL.Image 이미지 객체
+	:rtype: PIL.Image
 	"""
 	if image.mode == 'L':
 		raito = GRAYSCALE_COLOR_COUNT / colorCount
@@ -95,6 +100,7 @@ def mostPopularEdgeColor(image):
 	  @link http://coreapython.hosting.paran.com/howto/sebsauvage_net-%20Snyppets%20-%20Python%20snippets.htm#autocrop 이 함수에 대해 참조한 자료가 있는 웹페이지
 	
 	:param image: PIL 이미지 객체
+	:type image: PIL.Image
 	:returns: 가장 많은 색상(정수 튜플 (R,G,B))
 	:returns: L 모드 이미지인 경우 가장 많은 색상(정수)를 반환합니다.
 	"""
@@ -164,12 +170,15 @@ def trim(image, backgroundColor=None, fuzz=0):
 	
 	:param image: (PIL 이미지 객체) 다듬을 이미지.
 		알파 채널이 포함된 이미지 또는, RGB, L 형식의 이미지만 처리 할 수 있습니다.
+	:type image: PIL.Image
 	:param backgroundColor: "다듬을 배경"으로 간주될 색상(RGB: 3개의 정수가 담긴 터플).
 		예컨데, tuple(0,0,255)와 같은 형식으로 주어야 합니다. 이미지가 투명이면, 이 매개변수는 무시된다. 이미지가 투명이 아니고 이 매개변수가 주어지지 않으면, 자동으로 계산된다. 만약, L 모드라면 정수를 줘야 한다.
 	:param fuzz: float 또는 int형(0~99.9). 배경색과 다른 색상을 동일하게 취급하는 정도를 설정합니다.
+	:type fuzz: int, float
 	
-	:return: PIL.Image.Image 객체.
+	:return: PIL.Image 객체.
 	:return: 변경될 내용이 없는 경우, 원본을 반환합니다.
+	:rtype: PIL.Image
 	"""
 	bbox = None
 	

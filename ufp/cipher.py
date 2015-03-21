@@ -8,6 +8,7 @@ def unpadPkcs5(data):
 	PKCS#5 표준 패딩을 제거한다.
 	
 	:param data: 입력 데이터
+	:type data: str, bytes
 	:returns: 패딩이 제거된 데이터
 	"""
 	return data[0:-ord(data[-1])]
