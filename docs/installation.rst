@@ -5,7 +5,7 @@
 
 .. note:: ufp 모듈이 지원하는 운영체제는 Linux / Unix / MaxOS / POSIX 계열입니다.
 
-의존 패키지 설치
+외부 의존 패키지 설치
 -------------------
 
 ufp 모듈을 사용하기 위해서는 다음 외부 패키지가 필요합니다.
@@ -23,6 +23,16 @@ ufp 모듈을 사용하기 위해서는 다음 외부 패키지가 필요합니�
 	$ sudo yum install w3m kate ghostscript zenity python-qt4 python-tidylib
 	
 그외의 경우, 각자의 환경에 알맞는 방법으로 다음 패키지를 설치하십시오. w3m, kate, ghostscript, zenity, python-qt4, python-tidylib
+
+
+pillow 모듈 설치
+------------------
+
+ufp 모듈은 `pillow`_ 모듈을 사용하고 있습니다.
+
+`pillow`_ 모듈을 설치하기 위해 다음 문서를 참조하십시오: http://pillow.readthedocs.org/installation.html
+
+.. _pillow: http://python-pillow.github.io/
 
 ufp 모듈 설치
 -----------------

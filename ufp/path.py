@@ -10,6 +10,28 @@ import os.path
 import datetime
 import shutil
 
+def remove(path, force=False):
+	"""
+	주어진 경로에 존재하는 대상을 삭제합니다.
+	
+	폴더의 경우 재귀적으로 폴더 내용을 삭제한뒤 폴더를 삭제합니다.
+	
+	:param path: 삭제 대상의 경로(unicode)
+	:param force: 오류를 무시할지 여부(bool).\n
+		True : 오류를 무시함.\n
+		False : Exception이 발생하면, 그대로 던짐.
+	"""
+	try:
+		if os.path.isdir(path):
+			shutil.rmtree(path, force)
+		else:
+			os.remove(path)
+	except Exception, e:
+		if force:
+			return
+		raise e
+	pass
+
 def walk(top, maxDepth=None, onerror=None, followlinks=False):
 	"""
 	재귀적으로 경로 탐색하기
