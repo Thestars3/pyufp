@@ -1,6 +1,11 @@
 ﻿변경사항 (ufp)
 ==============
 
+v1.3.1
+-------
+
++ ufp.gui 모듈의 PulseProgress, Notepad클래스와 ufp.pdf 모듈의 toBmps, toBmp 함수에서 표준에러로 메시지를 출력하지 않도록 수정. [`tb69wn6127`_]
+
 v1.3.0
 -------
 

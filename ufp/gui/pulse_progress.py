@@ -47,7 +47,7 @@ class PulseProgress(QObject):
 		"""
 		진행 표시창을 닫습니다.
 		"""
+		self._zenity.terminate()
 		self._devnull.close()
-		self._zenity.kill()
 		pass
 	

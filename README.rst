@@ -79,13 +79,12 @@ pdf 파일을 bmp 변환하여 저장하기
 .. code-block:: python
 
 	>>> import ufp.pdf
-	>>> f = open('page1.pdf')
-	>>> buffer = f.read()
-	>>> bmp = ufp.pdf.toBmp(buffer, dpi=200)
-	>>> f.close()
-	>>> f = open('page1.bmp')
-	>>> f.write(bmp)
-	>>> f.close()
+	>>> with open('page1.pdf') as f:
+	>>> 	pdf = f.read()
+	>>> for bmp in ufp.pdf.toBmps(pdf, dpi=200):
+	>>> 	break
+	>>> with open('page1.bmp') as f:
+	>>> 	f.write(bmp)
 	
 이미지의 여백 제거하기
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -143,8 +142,8 @@ html 문서를 text로 변환
 도움말
 -------------------
 
-다음 문서를 참조 하십시오: `ufp 문서 <http://pyufp.readthedocs.org/index.html>`_.
-	
+다음 문서를 참조 하십시오: http://pyufp.readthedocs.org/index.html.
+
 수정사항
 -------------------
 

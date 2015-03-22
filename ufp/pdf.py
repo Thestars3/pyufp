@@ -5,6 +5,7 @@ from __future__ import unicode_literals, absolute_import, division, print_functi
 import subprocess
 import struct
 import time
+import os
 
 _ghostscriptCommand = [
 	'gs',
@@ -71,46 +72,52 @@ def toBmps(pdf, format='bmp16m', dpi=200):
 	cmd.insert(-2, '-sDEVICE={0}'.format(format)) #출력 형식
 	cmd.insert(-2, '-r{0}x{0}'.format(dpi))  #DPI
 	
-	#실행
-	gs = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-	
-	#pdf 파일 입력
-	gs.stdin.write(pdf)
-	gs.stdin.close()
-	
-	preBytes = None
-	while True:
-		#만약 출력 버퍼가 닫겼다면 종료.
-		if gs.poll() is not None:
-			if gs.returncode != 0:
+	try:
+		#실행
+		devnull = open(os.devnull, 'w')
+		gs = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=devnull)
+		
+		#pdf 파일 입력
+		gs.stdin.write(pdf)
+		gs.stdin.close()
+		
+		preBytes = None
+		while True:
+			#만약 출력 버퍼가 닫겼다면 종료.
+			if gs.poll() is not None:
+				if gs.returncode != 0:
+					raise Exception('pdf -> bmp 변환에 문제가 있습니다.')
+				raise StopIteration
+			
+			# bfType, bfSize 읽어오기
+			if preBytes:
+				bytes = preBytes + gs.stdout.read(6 - len(preBytes))
+				preBytes = None
+			else:
+				bytes = gs.stdout.read(6)
+			
+			#못 읽어왔으면 기다렸다 다시 시도
+			if len(bytes) != 6:
+				time.sleep(0.1)
+				preBytes = bytes
+				continue
+			
+			# bfType, bfSize 파싱
+			bfType, bfSize = struct.unpack(b'<2sI', bytes)
+			
+			if bfType != 'BM':
 				raise Exception('pdf -> bmp 변환에 문제가 있습니다.')
-			raise StopIteration
-		
-		# bfType, bfSize 읽어오기
-		if preBytes:
-			bytes = preBytes + gs.stdout.read(6 - len(preBytes))
-			preBytes = None
-		else:
-			bytes = gs.stdout.read(6)
-		
-		#못 읽어왔으면 기다렸다 다시 시도
-		if len(bytes) != 6:
-			time.sleep(0.1)
-			preBytes = bytes
-			continue
-		
-		# bfType, bfSize 파싱
-		bfType, bfSize = struct.unpack(b'<2sI', bytes)
-		
-		if bfType != 'BM':
-			raise Exception('pdf -> bmp 변환에 문제가 있습니다.')
-		
-		#bmp 파일 작성
-		bmp = bytes
-		bmp += gs.stdout.read(bfSize-6)
-		
-		#값을 반환
-		yield bmp
+			
+			#bmp 파일 작성
+			bmp = bytes
+			bmp += gs.stdout.read(bfSize-6)
+			
+			#값을 반환
+			yield bmp
+	except GeneratorExit:
+		if gs.poll() is not None:
+			gs.terminate()
+		devnull.close()
 	pass
 
 def toBmp(pdf, format='bmp32b', dpi=200):
@@ -151,7 +158,7 @@ def toBmp(pdf, format='bmp32b', dpi=200):
 	.. 고스트 스크립트 문서 : http://www.ghostscript.com/doc/current/Readme.htm
 	
 	:param pdf: pdf 바이너리 데이터.
-		오직 낱장(1 페이지)만 존재하는 pdf 데이터여야 합니다.
+		오직 1 페이지만 존재하는 pdf 데이터여야 합니다.
 	:type pdf: bytes
 	:param format: 출력 포멧.\n
 		bmp16m: 24-bit RGB Color\n
@@ -174,8 +181,10 @@ def toBmp(pdf, format='bmp32b', dpi=200):
 	cmd = _ghostscriptCommand[:]
 	cmd.insert(-2, '-sDEVICE={0}'.format(format)) #출력 형식
 	cmd.insert(-2, '-r{0}x{0}'.format(dpi))  #DPI
-	gs = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	devnull = open(os.devnull, 'w')
+	gs = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=devnull)
 	bmp = gs.communicate(pdf)[0]
+	devnull.close()
 	if gs.returncode != 0:
 		raise Exception('pdf -> bmp 변환에 문제가 있습니다.')
 	return bmp

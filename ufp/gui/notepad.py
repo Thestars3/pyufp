@@ -42,8 +42,8 @@ class Notepad(object):
 		"""
 		메모창을 닫습니다.
 		"""
+		self._process.terminate()
 		self._devnull.close()
-		self._process.kill()
 		pass
 	
 	@classmethod
