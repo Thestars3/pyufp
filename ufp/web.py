@@ -27,7 +27,7 @@ def trimFilename(filename, **options):
 	.. caution:: 인코딩 변환이 잘못될수도 있습니다.
 	
 	:param filename: 파일명 유니코드 문자열
-	:type filename: unicode
+	:type filename: unicode, bytes
 	:param from_encoding: 입력 인코딩.\n
 		'auto' : 자동으로 인코딩을 파악합니다. \n
 		False : 인코딩을 변환하지 않습니다. (기본)\n

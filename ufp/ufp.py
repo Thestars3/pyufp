@@ -22,9 +22,8 @@ def cleanSubtitle(content):
 	.. note:: 오직, smi, ass 파일만 지원합니다.
 	.. caution:: 변환 결과가 잘못 될 수도 있습니다.
 	
-	:param content: 자막 내용.\n
-		입력되는 content는 인코딩되지 않은 바이너리 또는 str, unicode여야 합니다.
-	:type content: str
+	:param content: 자막 내용.
+	:type content: unicode, bytes
 	:return: 변환된 자막 내용을 유니코드 문자열 타입으로 반환합니다.
 	:rtype: unicode
 	"""

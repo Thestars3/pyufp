@@ -13,7 +13,7 @@ def string(length, chars=_p_string.ascii_letters + _p_string.digits):
 	:type length: int
 	:param chars: 문자 집합\n
 		[a, ..., z, A, ..., Z, ..., 0, ..., 9] (기본값)
-	:type chars: str, list
+	:type chars: str, unicode, list
 	:return: 램덤 문자열
 	:rtype: unicode
 	"""

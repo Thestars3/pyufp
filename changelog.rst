@@ -1,5 +1,12 @@
-﻿변경사항 (ufp)
+﻿변경사항
 ==============
+
+v1.3.2
+-------
+
++ ufp.terminal.debug 모듈의 print 함수에서 발생하던 'SyntaxError: invalid syntax' 수정. [`tb69wn6127`_]
++ ufp.terminal.debug 모듈의 print 함수의 이름을 print_로 변경. [`tb69wn6127`_]
++ ufp.terminal.debug 모듈의 print 함수에 __builtin__.print 함수의 kwargs를 사용 할 수 있도록 수정. [`tb69wn6127`_]
 
 v1.3.1
 -------

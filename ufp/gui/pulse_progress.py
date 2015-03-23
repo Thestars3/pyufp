@@ -8,7 +8,9 @@ import os
 
 class PulseProgress(QObject):
 	"""
-	사용 예제는 다음과 같다.
+	진행 표시줄이 끝없이 움직이는 진행 표시창을 띄웁니다.
+	
+	사용 예제는 다음과 같습니다.
 		
 	.. code-block:: python
 

@@ -15,7 +15,7 @@ def clean(html, inputEncoding = "utf8") :
 	:param html: html 내용
 	:type html: unicode, str
 	:param inputEncoding: 입력 문자열의 인코딩
-	:type inputEncoding: unicode, str
+	:type inputEncoding: unicode
 	:returns: xhtml 문서
 	:rtype: unicode
 	.. 

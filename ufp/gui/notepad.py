@@ -19,7 +19,7 @@ class Notepad(object):
 		"""
 		메모에 내용을 씁니다.
 		
-		:param content: 쓸 내용(unicode, list, etc). list의 경우 각 항목을 줄 단위로 분할하여 기록합니다. list내에 존재하는 unicode는 그대로 기록하고, 그 외는 pprint.pformat함수를 호출하여 텍스트로 바꾸어 기록합니다. 그 외 요소는 모두 pprint.pformat함수를 호출하여 기록합니다.
+		:param content: 쓸 내용. list의 경우 각 항목을 줄 단위로 분할하여 기록합니다. list내에 존재하는 unicode는 그대로 기록하고, 그 외는 pprint.pformat함수를 호출하여 텍스트로 바꾸어 기록합니다. 그 외 요소는 모두 pprint.pformat함수를 호출하여 기록합니다.
 		"""
 		if isinstance(content, unicode):
 			write = content

@@ -1,7 +1,7 @@
-ufp
+pyufp
 ======
 
-ufp는 사용에 편리한 함수 및 클래스들의 모음입니다.
+pyufp는 사용에 편리한 python 함수 및 클래스들의 모음입니다.
 
 .. image:: https://pypip.in/version/ufp/badge.png?text=version
     :target: https://pypi.python.org/pypi/ufp/
@@ -24,8 +24,10 @@ ufp 모듈을 설치하려면 :doc:`설치 <installation>` 문서를 참조하�
 .. toctree::
    :maxdepth: 2
 
+   intro
    installation
    reference/index
+   changelog
 
 인덱스 및 테이블
 ==================

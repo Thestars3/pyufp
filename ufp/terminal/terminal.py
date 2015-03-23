@@ -7,18 +7,19 @@ import ANSIColors
 
 __all__ = ['feed', 'pause']
 
-def feed(*msg) :
+def feed(*objects):
 	"""
 	기존 줄을 지우고, 입력한 메시지를 화면에 씁니다.
 	
-	:param msg: 화면에 출력한 문자열 또는 print 함수 출력 옵션 설정
+	:param objects: 화면에 출력할 오브젝트
+	:type objects: object
 	"""
 	ANSIColors.clearLine()
-	print(*msg, end='')
+	print(*objects, end='')
 	sys.stdout.flush()
 	pass
 
-def pause() :
+def pause():
 	"""
 	사용자의 입력을 대기합니다.
 	
