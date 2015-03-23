@@ -38,11 +38,11 @@ def clean(html, inputEncoding = "utf8") :
 	document, errors = tidylib.tidy_document(html, options=options)
 	return document
 
-def toText(html, converter='pattern.web') :
+def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 	"""
 	html 문서를 텍스트 문서로 변환합니다.
 	
-	이 함수는 다음과 같이 사용한다.
+	이 함수는 다음과 같이 사용합니다.
 		
 	.. code-block:: python
 
@@ -56,24 +56,41 @@ def toText(html, converter='pattern.web') :
 	:type html: unicode
 	:param converter: 변환에 사용할 변환기\n
 		w3m : w3m 외부 프로그램을 불러와 작업을 하기 때문에 속도가 상당히 느립니다.\n
-		pattern.web : pattern(http://www.clips.ua.ac.be/pattern) 라이브러리를 사용합니다. (10개 초과의 공백라인은 자동으로 10개의 공백라인으로 치환됩니다. 앞 뒤 공백은 자동으로 제거됩니다.)
+		pattern.web : pattern(http://www.clips.ua.ac.be/pattern) 라이브러리를 사용합니다.
 	:type converter: unicode
+	:param linebreaks: 줄바꿈 문자가 이어질 최대 라인 수. '\\\\n'가 linebreaks이상 연속되지 않도록 합니다. 그 이상의 '\\\\n'은 자동으로 제거됩니다. 만약 None으로 설정될 경우 이 옵션은 비활성됩니다. None 또는 1 이상의 값이어야 합니다.
+	:type linebreaks: int, None
 	:raise ValueError: 지원하지 않는 변환기를 입력 한 경우
 	:return: text
 	:rtype: unicode
 	"""
 	if converter == 'w3m':
 		tempPath = tempfile.mkstemp(prefix='.tmp_', suffix='.html')[1]
-		with open(tempPath, 'w+b') as temp:
-			temp.write(html)
+		with open(tempPath, 'w+b') as f:
+			f.write(html)
 			pass
-		cmd = ['w3m', '-cols', '98304', '-dump' ,tempPath]
-		text = subprocess.check_output(cmd)
+		text = subprocess.check_output(['w3m', '-cols', '98304', '-dump' ,tempPath])
 		os.remove(tempPath)
+		if linebreaks is not None:
+			text = pattern.web.collapse_linebreaks(text, linebreaks)
+		if strip:
+			text = text.strip()
 		return text
 	
 	if converter == 'pattern.web':
-		text = pattern.web.plaintext(html, linebreaks=10, indentation=True)
+		html = pattern.web.strip_javascript(html)
+		html = pattern.web.strip_inline_css(html)
+		html = pattern.web.strip_forms(html)
+		html = pattern.web.strip_comments(html)
+		html = html.replace("\r", "\n")
+		html = pattern.web.strip_tags(html, exclude=[], replace=pattern.web.blocks)
+		html = pattern.web.decode_entities(html)
+		html = pattern.web.collapse_spaces(html, True)
+		text = pattern.web.collapse_tabs(html, True)
+		if linebreaks is not None:
+			text = pattern.web.collapse_linebreaks(text, linebreaks)
+		if strip:
+			text = text.strip()
 		return text
 	
 	raise ValueError("'{0}'는 지원하지 않는 변환기입니다.".format(converter))

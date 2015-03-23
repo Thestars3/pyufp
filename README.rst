@@ -61,6 +61,8 @@ Linux / Unix / MaxOS / POSIX 계열
 주어진 경로에서 유일한 경로를 생성하기
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+예제 : http://runnable.com/VQ5dcHQEFNQakHJ3/generate-unique-path-at-filepath-or-dirpath-for-python
+
 .. code-block:: python
 
 	>>> import ufp.path
@@ -76,6 +78,8 @@ Linux / Unix / MaxOS / POSIX 계열
 pdf 파일을 bmp 변환하여 저장하기
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+예제 : http://runnable.com/VQ-PD6EuyEYfeJNo/convert-pdf-to-bmp-for-python
+
 .. code-block:: python
 
 	>>> import ufp.pdf
@@ -89,6 +93,8 @@ pdf 파일을 bmp 변환하여 저장하기
 이미지의 여백 제거하기
 ^^^^^^^^^^^^^^^^^^^^^^
 
+예제 : http://runnable.com/VQ5WVo8OIogZ-_hv/trim-image-edge-whitespace-with-fuzz-for-python
+
 .. code-block:: python
 
 	>>> import ufp.image
@@ -98,6 +104,8 @@ pdf 파일을 bmp 변환하여 저장하기
 	
 Improved Gray Scale(IGS) 양자화
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+예제 : http://runnable.com/VQ5o_OpMIyQdA6zE/image-quantize-by-improved-gray-scale-for-python
 
 .. code-block:: python
 

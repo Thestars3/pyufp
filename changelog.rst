@@ -1,6 +1,13 @@
 ﻿변경사항
 ==============
 
+v1.3.3
+-------
+
++ ufp.html 모듈의 toText 함수에 linebreaks, strip 옵션을 추가함. [`tb69wn6127`_]
++ ufp.html 모듈의 toText 함수의 linebreaks 옵션이 None일 경우, pattern.web 변환기의 경우에도 작동하지 않도록 수정. [`tb69wn6127`_]
++ ufp.html 모듈의 toText 함수에서 converter가 pattern.web으로 지정되더라도 strip옵션이 False면 앞 뒤 공백을 제거하지 않도록 수정. [`tb69wn6127`_]
+
 v1.3.2
 -------
 
