@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.pdf
 .. py:currentmodule:: ufp.pdf
 
-:py:mod:`pdf` Module
+:py:mod:`pdf` 모듈
 ==========================
 
 .. automodule:: ufp.pdf

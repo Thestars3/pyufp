@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.gui
 .. py:currentmodule:: ufp.gui
 
-:py:mod:`gui` Module
+:py:mod:`gui` 모듈
 ==========================
 
 .. autoclass:: ufp.gui.Notepad

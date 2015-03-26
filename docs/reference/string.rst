@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.string
 .. py:currentmodule:: ufp.string
 
-:py:mod:`string` Module
+:py:mod:`string` 모듈
 ==========================
 
 .. automodule:: ufp.string

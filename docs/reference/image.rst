@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.image
 .. py:currentmodule:: ufp.image
 
-:py:mod:`image` Module
+:py:mod:`image` 모듈
 ==========================
 
 .. automodule:: ufp.image

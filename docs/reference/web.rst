@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.web
 .. py:currentmodule:: ufp.web
 
-:py:mod:`web` Module
+:py:mod:`web` 모듈
 ==========================
 
 .. automodule:: ufp.web

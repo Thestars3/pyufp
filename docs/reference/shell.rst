@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.shell
 .. py:currentmodule:: ufp.shell
 
-:py:mod:`shell` Module
+:py:mod:`shell` 모듈
 ==========================
 
 .. automodule:: ufp.shell

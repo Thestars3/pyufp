@@ -38,7 +38,7 @@ def cleanSubtitle(content):
 	content = re.sub('&#\d+;', buffer, content)
 	
 	return content
-	
+
 def trashPut(target):
 	"""
 	대상을 휴지통에 버립니다.

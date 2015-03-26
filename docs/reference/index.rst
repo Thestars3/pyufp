@@ -8,6 +8,7 @@
    cipher
    html
    image
+   dict
    path
    pdf
    random

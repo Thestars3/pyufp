@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.html
 .. py:currentmodule:: ufp.html
 
-:py:mod:`html` Module
+:py:mod:`html` 모듈
 ==========================
 
 .. automodule:: ufp.html

@@ -224,35 +224,35 @@ def replaceSpiecalChar(string, **options) :
 	:param keep_path_characters: True, False.
 		경로 구분자를 치환하지 않습니다. 이 설정은 type 설정에 의존합니다. 기본 값은 False입니다.
 	"""
-	UNIX_PATH_CHARACTER_RE = (u"/", u"／");
-	ESCAPE_CHARTER_UNIX_TYPE_RE = (u"\\", u"＼")
-	WINDOWS_PATH_CHARACTER_RE = (u"\\", u"￦")
+	UNIX_PATH_CHARACTER_RE = ("/", "／");
+	ESCAPE_CHARTER_UNIX_TYPE_RE = ("\\", "＼")
+	WINDOWS_PATH_CHARACTER_RE = ("\\", "￦")
 	DEFAULT_REGEXS = [
-		(u"?", u"？"),
-		(u":", u"："),
-		(u"*", u"＊"),
-		(u'"', u"＂"),
-		(u"<", u"〈"),
-		(u">", u"〉"),
-		(u"|", u"│"),
-		(u"'", u"＇"),
-		(u"$", u"＄"),
-		(u"!", u"！")
+		("?", "？"),
+		(":", "："),
+		("*", "＊"),
+		('"', "＂"),
+		("<", "〈"),
+		(">", "〉"),
+		("|", "│"),
+		("'", "＇"),
+		("$", "＄"),
+		("!", "！")
 	];
 	
 	#옵션 초기값 설정
-	options.setdefault(u'type', u'unix')
-	options.setdefault(u'keep_path_characters', False)
+	options.setdefault('type', 'unix')
+	options.setdefault('keep_path_characters', False)
 	
 	#옵션 처리
 	regexs = DEFAULT_REGEXS
-	if options[u'type'] == u'unix' :
+	if options['type'] == 'unix' :
 		regexs.append(ESCAPE_CHARTER_UNIX_TYPE_RE);
-		if not options[u'keep_path_characters'] :
+		if not options['keep_path_characters'] :
 			regexs += [UNIX_PATH_CHARACTER_RE];
-	elif options[u'type'] == u'windows' :
+	elif options['type'] == 'windows' :
 		regexs += [UNIX_PATH_CHARACTER_RE];
-		if not options[u'keep_path_characters'] :
+		if not options['keep_path_characters'] :
 			regexs += [WINDOWS_PATH_CHARACTER_RE];
 	
 	for before, after in regexs :
@@ -273,7 +273,7 @@ def dirname(path) :
 	:return: 부모 경로
 	:rtype: unicode
 	"""
-	dirnameRe = re.compile(u'(?P<dirname>^.*)/', re.DOTALL | re.UNICODE).search(path);
+	dirnameRe = re.compile(r'(?P<dirname>^.*)/', re.DOTALL | re.UNICODE).search(path);
 	if dirnameRe :
 		return dirnameRe.group('dirname');
 	return '.';
@@ -305,30 +305,31 @@ def unique(targetPath, spliteExt = True) :
 	:return: 유일한 경로.
 	"""
 	#경로 분할
-	targetDirname = dirname(targetPath);
-	targetBasename = os.path.basename(targetPath);
+	targetDirname = dirname(targetPath)
+	targetBasename = os.path.basename(targetPath)
 	
 	#부모 경로가 존재하는지 확인
-	if not os.path.exists(targetDirname) :
-		return targetPath;
+	if not os.path.exists(targetDirname):
+		return targetPath
 	
 	#해당 경로의 목록을 작성
-	fileList = [u'.', u'..'];
-	for dirpath, dirnames, filenames in os.walk(targetDirname) :
-		fileList.extend(filenames);
-		break;
+	fileList = ['.', '..']
+	for dirpath, dirnames, filenames in os.walk(targetDirname):
+		fileList.extend(filenames)
+		break
 		
 	#중복되는 대상이 존재하는지 확인
 	existDuplicateFile = False;
 	buffer = re.escape(targetBasename);
-	fullmatchRe = re.compile(u"^%(buffer)s$" % locals(), re.DOTALL | re.IGNORECASE | re.UNICODE);
-	for fileName in fileList :
-		if fullmatchRe.search(fileName) :
+	fullmatchRe = re.compile(r"^{0}$".format(buffer), re.IGNORECASE | re.UNICODE)
+	for fileName in fileList:
+		if fullmatchRe.search(fileName):
 			existDuplicateFile = True;
-			break;
+			break
+		pass
 	
 	#중복되는 대상이 존재하고 있지 않다면 이름을 그대로 돌려줌.
-	if not existDuplicateFile :
+	if not existDuplicateFile:
 		return targetPath;
 		
 	#파일명과 확장자를 추출
@@ -345,16 +346,17 @@ def unique(targetPath, spliteExt = True) :
 	#중복 파일들의 숫자를 가져옴.
 	escapedTargetFileName = re.escape(targetFileName);
 	if spliteExt :
-		extractDupCountRe = re.compile(ur"^%(escapedTargetFileName)s \(d(?P<number>[0-9]+)\)\.%(targetFileExt)s$" % locals(), re.DOTALL | re.IGNORECASE | re.UNICODE);
+		extractDupCountRe = re.compile(r"^%(escapedTargetFileName)s \(d(?P<number>[0-9]+)\)\.%(targetFileExt)s$" % locals(), re.DOTALL | re.IGNORECASE | re.UNICODE);
 	else :
-		extractDupCountRe = re.compile(ur"^%(escapedTargetFileName)s \(d(?P<number>[0-9]+)\)$" % locals(), re.DOTALL | re.IGNORECASE | re.UNICODE);
+		extractDupCountRe = re.compile(r"^%(escapedTargetFileName)s \(d(?P<number>[0-9]+)\)$" % locals(), re.DOTALL | re.IGNORECASE | re.UNICODE);
 	counts = [];
 	for fileName in fileList :
 		m = extractDupCountRe.search(fileName);
 		if m :
-			buffer = m.group(u'number')
+			buffer = m.group('number')
 			buffer = int(buffer)
 			counts.append(buffer);
+		pass
 	
 	#중복 숫자를 설정
 	if counts :
@@ -365,9 +367,9 @@ def unique(targetPath, spliteExt = True) :
 		
 	#중복 회피 이름 생성
 	if spliteExt :
-		uniqueName = u"%(targetFileName)s (d%(notDuplicatedNumber)d).%(targetFileExt)s" % locals();
+		uniqueName = "%(targetFileName)s (d%(notDuplicatedNumber)d).%(targetFileExt)s" % locals();
 	else :
-		uniqueName = u"%(targetFileName)s (d%(notDuplicatedNumber)d)" % locals();
+		uniqueName = "%(targetFileName)s (d%(notDuplicatedNumber)d)" % locals();
 	
 	return os.path.join(targetDirname, uniqueName);
 
@@ -381,7 +383,7 @@ def filename(filePath) :
 	:return: 파일 이름
 	:rtype: unicode
 	"""
-	rx = re.compile(ur"^(.*/)?(?P<name_space>.+?)?(?P<ext_space>\.[a-z0-9]+)?$", re.DOTALL | re.IGNORECASE | re.UNICODE);
+	rx = re.compile(r"^(.*/)?(?P<name_space>.+?)?(?P<ext_space>\.[a-z0-9]+)?$", re.DOTALL | re.IGNORECASE | re.UNICODE);
 	
 	result = rx.search(filePath)
 	if not result:
@@ -407,7 +409,7 @@ def extension(fileName) :
 	:return: 만약 확장자가 없다면, (빈 값)을 리턴합니다.
 	:rtype: unicode
 	"""
-	extRe = re.compile(ur"[^/]+\.(?P<ext>[a-z0-9]+)$", re.DOTALL | re.IGNORECASE | re.UNICODE);
+	extRe = re.compile(r"[^/]+\.(?P<ext>[a-z0-9]+)$", re.DOTALL | re.IGNORECASE | re.UNICODE);
 	result = extRe.search(fileName);
 	if result :
 		return result.group('ext');

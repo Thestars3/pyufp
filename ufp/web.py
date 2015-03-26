@@ -2,10 +2,10 @@
 #-*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-import cookielib
 import tempfile
 import urllib
 import re
+import cookielib
 import chardet
 import os
 
@@ -145,30 +145,22 @@ def loadNetscapeCookie(session, cookiePath):
 	tmpCookiePath = tempfile.mkstemp(prefix='.tmp_', suffix='.cookie')[1]
 	
 	#임시 파일 객체 생성
-	tmpCookie = open(tmpCookiePath, mode='w+b')
+	with open(tmpCookiePath, mode='w+b') as tmpCookie:
+		#넷스케이프 헤더 작성
+		tmpCookie.write('# Netscape HTTP Cookie File\n')
+		tmpCookie.write('# http://www.netscape.com/newsref/std/cookie_spec.html\n')
+		tmpCookie.write('# This is a generated file!  Do not edit.\n')
+		tmpCookie.write('\n')
+		
+		#기존 쿠키 파일의 내용을 삽입; 윈도우식 줄바꿈 -> 리눅스식으로 치환.
+		with open(cookiePath, 'r') as f:
+			buffer = f.read().replace('\r\n', '\n')
+			tmpCookie.write(buffer)
+			pass
 	
-	#넷스케이프 헤더 작성
-	tmpCookie.write('# Netscape HTTP Cookie File\n')
-	tmpCookie.write('# http://www.netscape.com/newsref/std/cookie_spec.html\n')
-	tmpCookie.write('# This is a generated file!  Do not edit.\n')
-	tmpCookie.write('\n')
-	
-	#기존 쿠키 파일의 내용을 삽입; 윈도우식 줄바꿈 -> 리눅스식으로 치환.
-	with open(cookiePath, 'r') as f:
-		buffer = f.read().replace('\r\n', '\n')
-		tmpCookie.write(buffer)
-		pass
-	
-	#쿠키 묶음 객체를 생성
+	#쿠키 파일 불러오기
 	cookieJar = cookielib.MozillaCookieJar(tmpCookiePath)
-	
-	#임시 파일 객체 닫기
-	tmpCookie.close()
-	
-	#쿠키 불러오기
 	cookieJar.load(ignore_discard=True, ignore_expires=True)
-	
-	#세션에 쿠키 설정하기.
 	session.cookies = cookieJar
 	
 	#임시 파일 삭제

@@ -10,6 +10,7 @@ def unpadPkcs5(data):
 	:param data: 입력 데이터
 	:type data: bytes
 	:returns: 패딩이 제거된 데이터
+	:rtype: bytes
 	"""
 	return data[0:-ord(data[-1])]
 	

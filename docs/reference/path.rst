@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.path
 .. py:currentmodule:: ufp.path
 
-:py:mod:`path` Module
+:py:mod:`path` 모듈
 ==========================
 
 .. automodule:: ufp.path
