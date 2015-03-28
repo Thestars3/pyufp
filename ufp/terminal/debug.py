@@ -17,7 +17,7 @@ def print_(*objects, **kwargs):
 	:type objects: object
 	:param kwargs: 옵션(__builtin__.print 함수의 인자와 같습니다)
 	"""
-	buffer = ANSIColors.sprint('<Red>[디버그]<reset> ')
+	buffer = ANSIColors.sprint('<Red>[DEBUG]<reset> ')
 	builtins.print(buffer, end='');
 	builtins.print(*objects, **kwargs);
 	pass

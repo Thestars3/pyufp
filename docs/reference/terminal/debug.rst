@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.terminal.debug
 .. py:currentmodule:: ufp.terminal.debug
 
-:py:mod:`debug` Module
+:py:mod:`debug` 모듈
 ==========================
 
 .. automodule:: ufp.terminal.debug

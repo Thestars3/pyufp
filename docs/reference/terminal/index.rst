@@ -1,7 +1,7 @@
 ﻿.. py:module:: ufp.terminal
 .. py:currentmodule:: ufp.terminal
 
-:py:mod:`terminal` Module
+:py:mod:`terminal` 모듈
 ==========================
 
 .. toctree::
