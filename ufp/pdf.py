@@ -69,8 +69,8 @@ def toBmps(pdf, format='bmp16m', dpi=200):
 	"""
 	#명령 설정
 	cmd = _ghostscriptCommand[:]
-	cmd.insert(-2, '-sDEVICE={0}'.format(format)) #출력 형식
-	cmd.insert(-2, '-r{0}x{0}'.format(dpi))  #DPI
+	cmd.insert(-2, '-sDEVICE={format}'.format(format=format)) #출력 형식
+	cmd.insert(-2, '-r{dpi}x{dpi}'.format(dpi=dpi))  #DPI
 	
 	try:
 		#실행
@@ -179,8 +179,8 @@ def toBmp(pdf, format='bmp32b', dpi=200):
 	:rtype: bytes
 	"""
 	cmd = _ghostscriptCommand[:]
-	cmd.insert(-2, '-sDEVICE={0}'.format(format)) #출력 형식
-	cmd.insert(-2, '-r{0}x{0}'.format(dpi))  #DPI
+	cmd.insert(-2, '-sDEVICE={format}'.format(format=format)) #출력 형식
+	cmd.insert(-2, '-r{dpi}x{dpi}'.format(dpi=dpi))  #DPI
 	devnull = open(os.devnull, 'w')
 	gs = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=devnull)
 	bmp = gs.communicate(pdf)[0]

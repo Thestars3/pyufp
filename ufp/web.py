@@ -7,7 +7,6 @@ import urllib
 import re
 import cookielib
 import chardet
-import os
 
 from . import path as _p_path
 from . import string as _p_string
@@ -55,7 +54,6 @@ def trimFilename(filename, **options):
 		fromEncoding = None
 	else:
 		fromEncoding = options[u'from_encoding']
-		pass
 	
 	#url 디코딩
 	filename = urllib.unquote(filename)
@@ -124,7 +122,6 @@ def dequoteJsStr(jsStr) :
 	];
 	for before, after in REGEXS :
 		jsStr = jsStr.replace(before, after)
-		pass
 	return jsStr;
 
 def loadNetscapeCookie(session, cookiePath):
@@ -142,10 +139,7 @@ def loadNetscapeCookie(session, cookiePath):
 	:type cookiePath: unicode
 	"""
 	#임시 파일 생성
-	tmpCookiePath = tempfile.mkstemp(prefix='.tmp_', suffix='.cookie')[1]
-	
-	#임시 파일 객체 생성
-	with open(tmpCookiePath, mode='w+b') as tmpCookie:
+	with tempfile.NamedTemporaryFile('wb', prefix='.tmp_', suffix='.cookie') as tmpCookie:
 		#넷스케이프 헤더 작성
 		tmpCookie.write('# Netscape HTTP Cookie File\n')
 		tmpCookie.write('# http://www.netscape.com/newsref/std/cookie_spec.html\n')
@@ -154,16 +148,12 @@ def loadNetscapeCookie(session, cookiePath):
 		
 		#기존 쿠키 파일의 내용을 삽입; 윈도우식 줄바꿈 -> 리눅스식으로 치환.
 		with open(cookiePath, 'r') as f:
-			buffer = f.read().replace('\r\n', '\n')
-			tmpCookie.write(buffer)
-			pass
-	
-	#쿠키 파일 불러오기
-	cookieJar = cookielib.MozillaCookieJar(tmpCookiePath)
-	cookieJar.load(ignore_discard=True, ignore_expires=True)
-	session.cookies = cookieJar
-	
-	#임시 파일 삭제
-	os.remove(tmpCookiePath)
+			buffer = f.read().replace('\r', '\n')
+			tmpCookie.write(buffer.encode('UTF-8'))
+		tmpCookie.flush()
+		
+		#쿠키 파일 불러오기
+		cookieJar = cookielib.MozillaCookieJar(tmpCookie.name)
+		cookieJar.load(ignore_discard=True, ignore_expires=True)
+		session.cookies = cookieJar
 	pass
-	

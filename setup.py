@@ -81,7 +81,7 @@ setup(
 		"Topic :: System :: Shells",
 		"Topic :: Utilities",
 		"Topic :: Text Processing :: General",
-		"Topic :: Software Development :: Libraries",
+		"Topic :: Software Development :: Libraries :: Python Modules",
 		"Operating System :: Unix",
 		"Operating System :: POSIX",
 		"Operating System :: MacOS",

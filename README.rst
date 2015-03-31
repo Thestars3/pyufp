@@ -175,7 +175,7 @@ html 문서를 text로 변환
 설치 방법
 -------------------
 
-`설치 <http://pyufp.readthedocs.org/installation.html>`_ 문서를 참조하십시오.
+설치 문서를 참조하십시오: http://pyufp.readthedocs.org/installation.html
 
 소스 코드
 -------------------

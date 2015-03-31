@@ -4,7 +4,6 @@
 from __future__ import unicode_literals, absolute_import, division, print_function
 import subprocess
 import tempfile
-import os
 import pattern.web
 import tidylib
 
@@ -65,17 +64,15 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 	:rtype: unicode
 	"""
 	if converter == 'w3m':
-		tempPath = tempfile.mkstemp(prefix='.tmp_', suffix='.html')[1]
-		with open(tempPath, 'w+b') as f:
-			f.write(html)
-			pass
-		text = subprocess.check_output(['w3m', '-cols', '98304', '-dump' ,tempPath])
-		os.remove(tempPath)
+		with tempfile.NamedTemporaryFile('wb', prefix='.tmp_', suffix='.html') as tempFile:
+			tempFile.write(html.encode('UTF-8'))
+			tempFile.flush()
+			text = subprocess.check_output(['w3m', '-cols', '98304', '-dump', tempFile.name])
 		if linebreaks is not None:
 			text = pattern.web.collapse_linebreaks(text, linebreaks)
 		if strip:
 			text = text.strip()
-		return text
+		return text.deocde('UTF-8')
 	
 	if converter == 'pattern.web':
 		html = pattern.web.strip_javascript(html)
@@ -93,4 +90,4 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 			text = text.strip()
 		return text
 	
-	raise ValueError("'{0}'는 지원하지 않는 변환기입니다.".format(converter))
+	raise ValueError("'{converter}'는 지원하지 않는 변환기입니다.".format(converter=converter))

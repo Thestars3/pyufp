@@ -41,5 +41,5 @@ def quote(string):
 	:rtype: unicode
 	"""
 	buffer = string.replace("'", r"'\''")
-	return "'{0}'".format(buffer)
+	return "'{string}'".format(string=buffer)
 	

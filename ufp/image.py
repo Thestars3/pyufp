@@ -90,7 +90,7 @@ def changeColorDepth(image, colorCount):
 		change = lambda value: math.trunc(value/raito)*raito
 		return PIL.Image.eval(image, change)
 	
-	raise ValueError('{0} 모드의 이미지는 사용 할 수 없습니다.'.format(image.mode))
+	raise ValueError('{mode} 모드의 이미지는 사용 할 수 없습니다.'.format(mode=image.mode))
 
 def mostPopularEdgeColor(image):
 	"""
@@ -213,7 +213,7 @@ def trim(image, backgroundColor=None, fuzz=0):
 		
 		bbox = diff.getbbox()  # 이미지의 진짜 둘레를 찾는다.
 	else:
-		raise ValueError('{0} 모드의 이미지는 처리가 불가능 합니다.'.format(image.mode))
+		raise ValueError('{mode} 모드의 이미지는 처리가 불가능 합니다.'.format(mode=image.mode))
 	
 	if bbox:
 		image = image.crop(bbox)

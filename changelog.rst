@@ -1,6 +1,13 @@
 ﻿변경사항
 ==============
 
+v1.5.1
+-------
+
++ tempfile.mkstemp로 생성한 파일 디스크립터가 닫기지 않았던 버그 수정. [`tb69wn6127`_]
++ 'UnicodeEncodeError: 'ascii' codec can't encode character' 버그 수정. [`tb69wn6127`_]
++ ufp.html.toText 함수에서 converter 옵션을 'w3m'으로 할 경우, 반환되는 텍스트가 bytes이던 점 수정. [`tb69wn6127`_]
+
 v1.5.0
 -------
 

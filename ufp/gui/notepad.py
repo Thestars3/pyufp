@@ -22,13 +22,12 @@ class Notepad(object):
 		:param content: 쓸 내용. list의 경우 각 항목을 줄 단위로 분할하여 기록합니다. list내에 존재하는 unicode는 그대로 기록하고, 그 외는 pprint.pformat함수를 호출하여 텍스트로 바꾸어 기록합니다. 그 외 요소는 모두 pprint.pformat함수를 호출하여 기록합니다.
 		"""
 		if isinstance(content, unicode):
-			write = content
-			pass
+			write = content.encode('UTF-8')
 		elif isinstance(content, list):
 			write = list()
 			for i in content:
 				if isinstance(i, unicode):
-					write.append(i)
+					write.append(i.encode('UTF-8'))
 				else:
 					write.append(pprint.pformat(i))
 			write = '\n'.join(write)
@@ -36,7 +35,6 @@ class Notepad(object):
 			write = pprint.pformat(content)
 		self._process.stdin.write(write)
 		self._process.stdin.close()
-		pass
 	
 	def close(self):
 		"""

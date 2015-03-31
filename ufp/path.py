@@ -206,7 +206,7 @@ def toUrl(path):
 	:return: file:///형식으로된 주소
 	:rtype: unicode
 	"""
-	buffer = urllib.pathname2url(str(path))
+	buffer = urllib.pathname2url(path.encode('UTF-8'))
 	return urlparse.urljoin('file:', buffer)
 
 def replaceSpiecalChar(string, **options) :
@@ -321,7 +321,7 @@ def unique(targetPath, spliteExt = True) :
 	#중복되는 대상이 존재하는지 확인
 	existDuplicateFile = False;
 	buffer = re.escape(targetBasename);
-	fullmatchRe = re.compile(r"^{0}$".format(buffer), re.IGNORECASE | re.UNICODE)
+	fullmatchRe = re.compile(r"^{targetBasename}$".format(targetBasename=buffer), re.IGNORECASE | re.UNICODE)
 	for fileName in fileList:
 		if fullmatchRe.search(fileName):
 			existDuplicateFile = True;
@@ -346,9 +346,9 @@ def unique(targetPath, spliteExt = True) :
 	#중복 파일들의 숫자를 가져옴.
 	escapedTargetFileName = re.escape(targetFileName);
 	if spliteExt :
-		extractDupCountRe = re.compile(r"^%(escapedTargetFileName)s \(d(?P<number>[0-9]+)\)\.%(targetFileExt)s$" % locals(), re.DOTALL | re.IGNORECASE | re.UNICODE);
+		extractDupCountRe = re.compile(r"^{escapedTargetFileName} \(d(?P<number>[0-9]+)\)\.{targetFileExt}$".format(escapedTargetFileName=escapedTargetFileName, targetFileExt=targetFileExt), re.DOTALL | re.IGNORECASE | re.UNICODE);
 	else :
-		extractDupCountRe = re.compile(r"^%(escapedTargetFileName)s \(d(?P<number>[0-9]+)\)$" % locals(), re.DOTALL | re.IGNORECASE | re.UNICODE);
+		extractDupCountRe = re.compile(r"^{escapedTargetFileName} \(d(?P<number>[0-9]+)\)$".format(escapedTargetFileName=escapedTargetFileName), re.DOTALL | re.IGNORECASE | re.UNICODE);
 	counts = [];
 	for fileName in fileList :
 		m = extractDupCountRe.search(fileName);
@@ -367,9 +367,9 @@ def unique(targetPath, spliteExt = True) :
 		
 	#중복 회피 이름 생성
 	if spliteExt :
-		uniqueName = "%(targetFileName)s (d%(notDuplicatedNumber)d).%(targetFileExt)s" % locals();
+		uniqueName = "{targetFileName} (d{notDuplicatedNumber}).{targetFileExt}".format(targetFileName=targetFileName, notDuplicatedNumber=notDuplicatedNumber, targetFileExt=targetFileExt)
 	else :
-		uniqueName = "%(targetFileName)s (d%(notDuplicatedNumber)d)" % locals();
+		uniqueName = "{targetFileName} (d{notDuplicatedNumber})".format(targetFileName=targetFileName, notDuplicatedNumber=notDuplicatedNumber)
 	
 	return os.path.join(targetDirname, uniqueName);
 
