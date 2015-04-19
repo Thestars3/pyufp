@@ -1,7 +1,13 @@
 ﻿변경사항
 ==============
 
+v1.6.1
+-------
+
++ ufp.path 모듈의 mergeDir, moveAllContent 함수 사용시 중복 회피 처리되지 않던 점 수정. [`tb69wn6127`_]
+
 v1.6.0
+-------
 
 + ufp.path 모듈의 listdir 함수에서 발생하던 "UnboundLocalError: local variable 'pattern' referenced before assignment" 오류 수정. [`tb69wn6127`_]
 + ufp.path 모듈의 moveAllContent 함수 사용시, 이름이 충돌하는 파일은 자동으로 중복 회피된 새 이름으로 옮기도록 함. [`tb69wn6127`_]

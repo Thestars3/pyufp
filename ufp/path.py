@@ -75,22 +75,27 @@ def moveAllContent(dirPath, destPath):
 	"""
 	dirPath에 존재하는 모든 파일을 destPath로 옮깁니다.
 	
-	만약 중복 파일이 존재한다면 자동으로 중복 회피한 이름을 새 이름으로 지정하여 옮깁니다.
+	만약 중복 파일이 존재한다면 자동으로 중복 회피한 이름을 새 이름으로 지정하여 옮깁니다. 중복 회피 대상은 각 디렉토리 바로 아래의 파일들입니다.
 	
 	:param dirPath: 이동 할 대상 파일들이 담긴 폴더
 	:type dirPath: unicode
 	:param destPath: 파일들이 옮겨져갈 위치
 	:type destPath: unicode
 	"""
-	for i in listdir(dirPath, fullpath=True):
-		shutil.move(i, destPath)
+	for src in listdir(dirPath, fullpath=True):
+		#이동 경로 설정
+		buffer = os.path.basename(src)
+		buffer = os.path.join(destPath, buffer)
+		dest = unique(buffer)
+		
+		shutil.move(src, dest) #이동
 	pass
 
 def mergeDir(dirPaths, destPath):
 	"""
 	dirPaths에 존재하는 모든 파일을 destPath로 옮긴 뒤, dirPath를 삭제합니다.
 	
-	만약 중복 파일이 존재한다면 자동으로 중복 회피한 이름을 새 이름으로 지정하여 옮깁니다.
+	만약 중복 파일이 존재한다면 자동으로 중복 회피한 이름을 새 이름으로 지정하여 옮깁니다. 중복 회피 대상은 각 디렉토리 바로 아래의 파일들입니다.
 	
 	:param dirPaths: 이동 할 대상 파일들이 담긴 디렉토리 경로, 또는 디렉토리 경로 목록.
 	:type dirPaths: unicode, list(unicode, ...), tuple(unicode, ...)
