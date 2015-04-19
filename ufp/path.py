@@ -69,12 +69,13 @@ def walk(top, maxDepth=None, onerror=None, followlinks=False):
 		yield root, dirs, files
 		if maxDepth is not None and num_sep + maxDepth <= root.count(os.path.sep):
 			del dirs[:]
-		pass
 	pass
 	
 def moveAllContent(dirPath, destPath):
 	"""
 	dirPath에 존재하는 모든 파일을 destPath로 옮깁니다.
+	
+	만약 중복 파일이 존재한다면 자동으로 중복 회피한 이름을 새 이름으로 지정하여 옮깁니다.
 	
 	:param dirPath: 이동 할 대상 파일들이 담긴 폴더
 	:type dirPath: unicode
@@ -83,7 +84,25 @@ def moveAllContent(dirPath, destPath):
 	"""
 	for i in listdir(dirPath, fullpath=True):
 		shutil.move(i, destPath)
-		pass
+	pass
+
+def mergeDir(dirPaths, destPath):
+	"""
+	dirPaths에 존재하는 모든 파일을 destPath로 옮긴 뒤, dirPath를 삭제합니다.
+	
+	만약 중복 파일이 존재한다면 자동으로 중복 회피한 이름을 새 이름으로 지정하여 옮깁니다.
+	
+	:param dirPaths: 이동 할 대상 파일들이 담긴 디렉토리 경로, 또는 디렉토리 경로 목록.
+	:type dirPaths: unicode, list(unicode, ...), tuple(unicode, ...)
+	:param destPath: 파일들이 옮겨져갈 위치
+	:type destPath: unicode
+	"""
+	if isinstance(dirPaths, unicode):
+		dirPaths = [dirPaths]
+	
+	for dirPath in dirPaths:
+		moveAllContent(dirPath, destPath)
+		os.rmdir(dirPath)
 	pass
 
 def mtime(path, format):
@@ -150,23 +169,22 @@ def listdir(path, **options):
 	options.setdefault('fullpath', False)
 	options.setdefault('sortKey', None)
 	
-	if options['pattern']:
+	if options['pattern'] is not None:
 		pattern = options['pattern']
-		pass
 		
-	#만약 패턴이 문자열이라면 리스트에 담기.
-	if isinstance(pattern, unicode):
-		pattern = list(pattern)
-		pass
-	
-	#패턴 컴파일
-	pattern = map(lambda x: re.compile(x, re.IGNORECASE), pattern)
+		#만약 패턴이 문자열이라면 리스트에 담기.
+		if isinstance(pattern, unicode):
+			pattern = list(pattern)
+		
+		#패턴 컴파일
+		pattern = map(lambda x: re.compile(x, re.IGNORECASE), pattern)
 	
 	#목록 작성
 	listdir = list()
-	for filename in os.listdir(path):
-		#패턴 옵션이 설정된 경우 필터링
-		if options['pattern']:
+	iterator = os.listdir(path)
+	#패턴 옵션이 설정된 경우 필터링
+	if options['pattern'] is not None:
+		for filename in iterator:
 			for p in pattern:
 				#패턴 역전 옵션이 꺼진 경우
 				if p.search(filename) and not options['patternReverse']:
@@ -177,21 +195,18 @@ def listdir(path, **options):
 				if options['patternReverse']:
 					listdir.append(filename)
 					break
-				pass
-			pass
-		pass
+	else:
+		listdir.extend(iterator)
 	
 	#sortKey 옵션이 사용된 경우
-	if not options['sortKey']:
-		buffer = options['sortKey']
-		buffer = lambda x: buffer(os.path.join(path, x))
+	if options['sortKey']:
+		key = options['sortKey']
+		buffer = lambda x: key(os.path.join(path, x))
 		listdir.sort(key=buffer)
-		pass
 	
 	#fullpath 옵션이 켜진 경우
 	if options['fullpath']:
 		listdir = pjoin(path, listdir)
-		pass
 	
 	#결과 반환
 	return listdir
