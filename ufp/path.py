@@ -236,13 +236,19 @@ def replaceSpiecalChar(string, **options) :
 	윈도우 및 유닉스 계열 운영체제에서 파일에 포함되면 문제가 되는 특수문자를 대체문자로 치환합니다. 경로 구분자를 대체 문자로 치환합니다.
 	
 	.. note::
-		윈도우에서 파일명으로 사용 할  없는 문자들(파일 이름에 다음 문자를 사용할 수 없습니다):\n
+		윈도우에서 파일명으로 사용 할 수 없는 문자들(파일 이름에 다음 문자를 사용할 수 없습니다):\n
 		\\\\ / : * ? " < > |
+	.. note::
+		리눅스에서 파일명으로 사용 할 수 없는 문자들(파일 이름에 다음 문자를 사용할 수 없습니다):\n
+		/
 	
-	:param type: 'windows', 'unix'.
-		윈도우의 경로 구분 문자는 리눅스에서 표시되는 모양이 다릅니다. 어떤 OS에서 보여지는 모양으로 치환할지 지정합니다. 기본값은 unix입니다.
-	:param keep_path_characters: True, False.
-		경로 구분자를 치환하지 않습니다. 이 설정은 type 설정에 의존합니다. 기본 값은 False입니다.
+	:param string: 치환 될 문자열
+	:tpye string: unicode
+	:param **options: \n
+		type: u'windows', u'unix'.
+		윈도우의 경로 구분 문자는 리눅스에서 표시되는 모양이 다릅니다. 지정된 OS에서 보여지는 문자 모양과 유사한 대체문자로 치환하도록 지정합니다. 기본값은 unix입니다.\n
+		keep_path_characters(bool): 경로 구분자를 치환하지 않습니다. 이 설정은 type 설정에 의존합니다. 기본 값은 False입니다.
+	:rtype: 
 	"""
 	UNIX_PATH_CHARACTER_RE = ("/", "／");
 	ESCAPE_CHARTER_UNIX_TYPE_RE = ("\\", "＼")
