@@ -11,6 +11,7 @@
 	dict
 	path
 	pdf
+	math
 	list
 	descriptor
 	random

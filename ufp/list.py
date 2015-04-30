@@ -3,6 +3,17 @@
 
 from __future__ import unicode_literals, absolute_import, division, print_function
 
+def preallocate(size, value=None):
+	"""
+	size 만큼의 길이를 가진 list를 반환합니다. 리스트의 내용은 value로 채워집니다.
+	
+	:param size: 할당 할 크기.
+	:type size: int
+	:param value: 초기화 할 값.
+	:return: size만큼 할당 된 list.
+	"""
+	return size * [value]
+
 def chunks(list, step):
 	"""
 	list를 step 단위로 묶어 yield합니다.
