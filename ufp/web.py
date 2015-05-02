@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import, division, print_function
 import tempfile
 import urllib
 import re
@@ -11,7 +11,7 @@ import chardet
 from . import path as _p_path
 from . import string as _p_string
 
-def trimFilename(filename, **options):
+def trimFilename(filename, from_encoding=False, consider_extension=False):
 	"""
 	웹에서 다운받은 파일의 이름을 손질함.
 	
@@ -29,75 +29,57 @@ def trimFilename(filename, **options):
 	:type filename: unicode, bytes
 	:param from_encoding: 입력 인코딩.\n
 		'auto' : 자동으로 인코딩을 파악합니다. \n
-		False : 인코딩을 변환하지 않습니다. (기본)\n
+		False : 인코딩을 변환하지 않습니다. 만약, filename이 bytes라면 unicode 함수를 통해 unicode로 변환합니다.\n
 		기타('utf8', 'uhc', ...)
 	:param consider_extension: 확장자 고려 여부\n
 		True: 확장자를 고려하여 작업합니다.\n
-		False: 확장자를 고려하지 않습니다. (기본)
+		False: 확장자를 고려하지 않습니다.
 	:type consider_extension: bool
 		
-	:return: 변환된 문자열
-	:return: u'Unknown'. 결과물이 공백이 될 경우 공백 대신 이 문자열이 반환됩니다.
+	:return: 변환된 문자열.
+	:return: 결과물이 공백이 될 경우 공백 대신 u'Unknown'이 반환됩니다.
 	:rtype: unicode
 	"""
-	#옵션 초기값 설정
-	options.setdefault(u'consider_extension', False)
-	options.setdefault(u'from_encoding', False)
-		
-	#옵션 처리 : consider_extension
-	considerExtension = options[u'consider_extension']
-	
-	#옵션 처리 : from_encoding
-	if options[u'from_encoding'] == u'auto':
-		fromEncoding = chardet.detect(filename)['encoding']
-	elif options[u'from_encoding'] == False:
-		fromEncoding = None
-	else:
-		fromEncoding = options[u'from_encoding']
-	
-	#url 디코딩
-	filename = urllib.unquote(filename)
+	if isinstance(filename, unicode):
+		filename = filename.encode('UTF-8')
+	filename = urllib.unquote(filename) #url 디코딩
 	
 	#인코딩 변환
-	if fromEncoding:
-		filename = filename.decode(fromEncoding, errors='replace')
+	if from_encoding == u'auto':
+		buffer = chardet.detect(filename)['encoding']
+		filename = filename.decode(buffer, errors='replace')
+	elif from_encoding == False:
+		filename = unicode(filename)
+	else:
+		filename = filename.decode(from_encoding, errors='replace')
 	
-	#url 디코딩
-	filename = urllib.unquote(filename)
-	
-	#전체 파일명의 앞뒤 공백 제거
-	filename = filename.strip()
-	
-	#파일명에 사용불가능한 문자 치환
-	filename = _p_path.replaceSpiecalChar(filename)
+	filename = urllib.unquote(filename) #url 디코딩
+	filename = filename.strip() #전체 파일명의 앞뒤 공백 제거
+	filename = _p_path.replaceSpiecalChar(filename) #파일명에 사용불가능한 문자 치환
 	
 	#확장자 분리
-	if considerExtension:
+	if consider_extension:
 		ext = _p_path.extension(filename)
 		if ext:
 			filename = _p_path.filename(filename)
 		else:
-			considerExtension = False
+			consider_extension = False
 		
 	#이름에 포함된 and표시 제거
-	if not re.search(u' ', filename):
-		pattern1 = re.compile(u'[_+]', re.UNICODE)
-		pattern2 = re.compile(ur'\.', re.UNICODE)
+	if not re.search(' ', filename):
+		pattern1 = re.compile(r'[_+]', re.UNICODE)
+		pattern2 = re.compile(r'\.', re.UNICODE)
 		if pattern1.search(filename):
 			filename = pattern1.sub(' ', filename)
 		elif pattern2.search(filename):
 			filename = pattern2.sub(' ', filename)
 	
-	#파일이름의 앞뒤 공백 제거
-	filename = filename.strip()
-	
-	#제어문자 제거
-	filename = _p_string.removeControlChar(filename)
-	#filename = re.sub('[:cntrl:]', ' ', filename, flags=re.UNICODE)
+	filename = filename.strip() #파일이름의 앞뒤 공백 제거
+	filename = _p_string.removeControlChar(filename) #제어문자 제거
 	
 	#파일명 합침.
-	if considerExtension:
-		filename = '.'.join((filename, ext))
+	if consider_extension:
+		filename = '{filename}.{ext}'.format(filename=filename, ext=ext)
 	
 	#파일명을 반환
 	if filename:
