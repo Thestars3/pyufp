@@ -11,7 +11,7 @@ def removeControlChar(string):
 	:param string: 문자열
 	:type string: unicode
 	
-	:return: 경로 문자가 제거된 문자열
+	:return: 제어 문자가 제거된 문자열
 	:rtype: unicode
 	"""
 	return ''.join(ch for ch in string if unicodedata.category(ch)[0]!="C")

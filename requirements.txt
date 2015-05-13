@@ -3,3 +3,4 @@ ANSIColors-balises
 trash-cli
 chardet
 pattern
+beautifulsoup4

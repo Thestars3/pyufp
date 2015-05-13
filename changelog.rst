@@ -1,11 +1,21 @@
 ﻿변경사항
 ==============
 
+v1.9
+-------
+
++ ufp.random 모듈에 bytes함수를 추가. [`tb69wn6127`_]
++ ufp.web.trimFilename 함수에 유니코드 문자열을 전달 할시 발생하던 UnicodeDecodeError 오류 수정. [`tb69wn6127`_]
++ ufp.bs4 모듈을 추가. [`tb69wn6127`_]
+	+ copy 함수를 추가. [`tb69wn6127`_]
+	+ deepcopy 함수를 추가. [`tb69wn6127`_]
+
 v1.8.1
 -------
 
 + ufp.web 모듈의 trimFilename 함수의 **option인자를 그대로 노출 하도록 수정. [`tb69wn6127`_]
 + ufp.web 모듈의 trimFilename 함수 사용시, 전달되는 filename 인자에 퍼센트 인코딩된 문자열이 존재하는 경우 정상적으로 디콰우팅하지 못하던 점 버그 수정. [`tb69wn6127`_]
++ ufp.web 모듈의 trimFilename 함수에서 filename 인자로 전달되는 값의 타입에 대해 보다 명확하게 처리하도록 개선. [`tb69wn6127`_]
 
 v1.8
 -------

@@ -14,6 +14,7 @@
 	math
 	list
 	descriptor
+	bs4
 	random
 	shell
 	string

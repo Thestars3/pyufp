@@ -29,7 +29,7 @@ def trimFilename(filename, from_encoding=False, consider_extension=False):
 	:type filename: unicode, bytes
 	:param from_encoding: 입력 인코딩.\n
 		'auto' : 자동으로 인코딩을 파악합니다. \n
-		False : 인코딩을 변환하지 않습니다. 만약, filename이 bytes라면 unicode 함수를 통해 unicode로 변환합니다.\n
+		False : 인코딩을 변환하지 않습니다.\n
 		기타('utf8', 'uhc', ...)
 	:param consider_extension: 확장자 고려 여부\n
 		True: 확장자를 고려하여 작업합니다.\n
@@ -45,11 +45,11 @@ def trimFilename(filename, from_encoding=False, consider_extension=False):
 	filename = urllib.unquote(filename) #url 디코딩
 	
 	#인코딩 변환
-	if from_encoding == u'auto':
+	if from_encoding == 'auto':
 		buffer = chardet.detect(filename)['encoding']
 		filename = filename.decode(buffer, errors='replace')
 	elif from_encoding == False:
-		filename = unicode(filename)
+		filename = filename.decode('UTF-8')
 	else:
 		filename = filename.decode(from_encoding, errors='replace')
 	

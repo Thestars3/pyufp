@@ -7,34 +7,42 @@ import tempfile
 import pattern.web
 import tidylib
 
+__all__ = [
+	'clean', 
+	'toText'
+]
+
 def clean(html, inputEncoding = "utf8") :
 	"""
 	html 문서를 보다 규격화된 xhtml로 변환합니다.
 	
+	.. 참조 자료:
+		http://tidy.sourceforge.net/docs/quickref.html HTML Tidy 설정 옵션 빠른 참조
+		http://countergram.com/open-source/pytidylib/docs/index.html#small-example-of-use Html Tidy에 관한 파이썬 인터페이스 pytidylib.moudule
+	
 	:param html: html 내용
-	:type html: unicode, str
+	:type html: unicode, bytes
 	:param inputEncoding: 입력 문자열의 인코딩
 	:type inputEncoding: unicode
 	:returns: xhtml 문서
 	:rtype: unicode
-	.. 
-	  @link http://tidy.sourceforge.net/docs/quickref.html HTML Tidy 설정 옵션 빠른 참조
-	  @link http://countergram.com/open-source/pytidylib/docs/index.html#small-example-of-use Html Tidy에 관한 파이썬 인터페이스 pytidylib.moudule
 	"""
-	options = {
-		str("output-xhtml"): True, #"output-xml" : True
-		str("quiet"): True,
-		str("show-errors"): 0,
-		str("force-output"): True,
-		str("numeric-entities"): True,
-		str("show-warnings"): False,
-		str("input-encoding"): inputEncoding,
-		str("output-encoding"): "utf8",
-		str("indent"): False,
-		str("tidy-mark"): False,
-		str("wrap"): 0
-		};
-	document, errors = tidylib.tidy_document(html, options=options)
+	document, errors = tidylib.tidy_document(
+		html, 
+		options = {
+			b"output-xhtml": True, #"output-xml" : True
+			b"quiet": True,
+			b"show-errors": 0,
+			b"force-output": True,
+			b"numeric-entities": True,
+			b"show-warnings": False,
+			b"input-encoding": inputEncoding,
+			b"output-encoding": "utf8",
+			b"indent": False,
+			b"tidy-mark": False,
+			b"wrap": 0
+		}
+	)
 	return document
 
 def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
@@ -90,4 +98,8 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 			text = text.strip()
 		return text
 	
-	raise ValueError("'{converter}'는 지원하지 않는 변환기입니다.".format(converter=converter))
+	raise ValueError(
+		b"'{converter}'는 지원하지 않는 변환기입니다.".format(
+			converter=converter
+		)
+	)
