@@ -1,6 +1,17 @@
 ﻿변경사항
 ==============
 
+v1.10
+-------
+
++ ufp 모듈에 make_repr 함수가 추가됨. [`tb69wn6127`_]
++ ufp.descriptor 모듈의 classproperty 함수에서 발생하던 "UnboundLocalError: local variable 'obj' referenced before assignment" 오류 수정. [`tb69wn6127`_]
+
+v1.9.1
+-------
+
++ ufp.html.toText 함수에서 converter를 w3m으로 사용시 발생하던 "AttributeError: 'str' object has no attribute 'deocde'"오류 수정. [`tb69wn6127`_]
+
 v1.9
 -------
 

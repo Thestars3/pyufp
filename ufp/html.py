@@ -67,6 +67,8 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 	:type converter: unicode
 	:param linebreaks: 줄바꿈 문자가 이어질 최대 라인 수. '\\\\n'가 linebreaks이상 연속되지 않도록 합니다. 그 이상의 '\\\\n'은 자동으로 제거됩니다. 만약 None으로 설정될 경우 이 옵션은 비활성됩니다. None 또는 1 이상의 값이어야 합니다.
 	:type linebreaks: int, None
+	:param strip: 문서의 앞 뒤에 존재하는 공백문자를 제거합니다.
+	:type strip: bool
 	:raise ValueError: 지원하지 않는 변환기를 입력 한 경우
 	:return: text
 	:rtype: unicode
@@ -80,7 +82,7 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 			text = pattern.web.collapse_linebreaks(text, linebreaks)
 		if strip:
 			text = text.strip()
-		return text.deocde('UTF-8')
+		return text.decode('UTF-8')
 	
 	if converter == 'pattern.web':
 		html = pattern.web.strip_javascript(html)

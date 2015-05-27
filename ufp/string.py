@@ -10,7 +10,6 @@ def removeControlChar(string):
 	
 	:param string: 문자열
 	:type string: unicode
-	
 	:return: 제어 문자가 제거된 문자열
 	:rtype: unicode
 	"""

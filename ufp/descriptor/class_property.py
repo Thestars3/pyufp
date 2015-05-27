@@ -39,8 +39,8 @@ class ClassPropertyMetaClass(type):
 	def __setattr__(self, key, value):
 		if key in self.__dict__:
 			obj = self.__dict__.get(key)
-		if obj and type(obj) is ClassPropertyDescriptor:
-			return obj.__set__(self, value)
+			if obj and type(obj) is ClassPropertyDescriptor:
+				return obj.__set__(self, value)
 		super(ClassPropertyMetaClass, self).__setattr__(key, value)
 	
 
