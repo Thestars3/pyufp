@@ -9,9 +9,13 @@ import HTMLParser
 import re
 import itertools
 
-__all__ = ['trashPut', 'cleanSubtitle', 'make_repr']
+__all__ = [
+	'trashPut',
+	'cleanSubtitle',
+	'make_repr'
+]
 
-def make_repr(type_name, values=[], orderd_items=[], items={}, *args, **kwargs):
+def make_repr(type_name, values=[], orderd_items=[], items={}, **kwargs):
 	"""
 	repr 문자열을 생성합니다.
 	
@@ -23,8 +27,6 @@ def make_repr(type_name, values=[], orderd_items=[], items={}, *args, **kwargs):
 	:type items: {key:value, ...}
 	:param orderd_items: 값들. 전달된 순서대로 배치합니다.
 	:type orderd_items: [(key,value), ...]
-	:param *args: 값들.\n
-		형식과 값은 values의 각 요소와 같습니다.
 	:param **kwargs: 값들.\n
 		형식과 값은 items의 각 요소와 같습니다.
 	:return: u'{type_name}({value}, ..., {key}={value}, ...)'
@@ -45,7 +47,7 @@ def make_repr(type_name, values=[], orderd_items=[], items={}, *args, **kwargs):
 			return "'{0}'".format(buffer)
 		return repr(value)
 	repr_list = list()
-	for value in itertools.chain(values, args):
+	for value in values:
 		buffer = convert(value)
 		repr_list.append(buffer)
 	for key, value in itertools.chain(orderd_items, items.items(), kwargs.items()):

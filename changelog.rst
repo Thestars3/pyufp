@@ -1,6 +1,12 @@
 ﻿변경사항
 ==============
 
+v1.10.1
+-------
+
++ ufp 모듈의 make_repr 함수에서 발생하던 "ValueError: need more than 1 value to unpack" 오류를 수정. [`tb69wn6127`_]
++ ufp 모듈의 make_repr 함수의 *args 인자가 제거됨. [`tb69wn6127`_]
+
 v1.10
 -------
 
