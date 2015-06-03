@@ -6,6 +6,7 @@ import subprocess
 import tempfile
 import pattern.web
 import tidylib
+#from ufp.terminal.debug import print_ as debug
 
 __all__ = [
 	'clean', 
@@ -45,12 +46,12 @@ def clean(html, inputEncoding = "utf8") :
 	)
 	return document
 
-def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
+def toText(html, converter='pattern.web', linebreaks=10, strip=False, replace=None):
 	"""
 	html 문서를 텍스트 문서로 변환합니다.
 	
 	이 함수는 다음과 같이 사용합니다.
-		
+	
 	.. code-block:: python
 
 		>>> import ufp.html
@@ -58,13 +59,15 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 		>>> html = requests.get('http://www.gnu.org/licenses/').content
 		>>> ufp.html.toText(html.decode('utf8'))
 		u"Licenses\\n- GNU Project - Free Software Foundation\\n\\n\\n ...
-
+	
 	:param html: 원본 html 텍스트
 	:type html: unicode
 	:param converter: 변환에 사용할 변환기\n
 		w3m : w3m 외부 프로그램을 불러와 작업을 하기 때문에 속도가 상당히 느립니다.\n
 		pattern.web : pattern(http://www.clips.ua.ac.be/pattern) 라이브러리를 사용합니다.
 	:type converter: unicode
+	:param replace: 태그를 특정 문자로 치환합니다. 다음과 같은 형식을 따릅니다. {태그 이름: (태그의 앞, 태그의 뒤)}. 예컨데, replace를 {'h1':('>', '<')}로 지정하면, "<h1>안녕하세요!<h1>"란 태그는 ">안녕하세요!<"로 치환됩니다. None으로 지정될 경우, 작동하지 않습니다. (pattern.web 변환기 전용)
+	:type replace: {unicode:(unicode, unicode)}, None
 	:param linebreaks: 줄바꿈 문자가 이어질 최대 라인 수. '\\\\n'가 linebreaks이상 연속되지 않도록 합니다. 그 이상의 '\\\\n'은 자동으로 제거됩니다. 만약 None으로 설정될 경우 이 옵션은 비활성됩니다. None 또는 1 이상의 값이어야 합니다.
 	:type linebreaks: int, None
 	:param strip: 문서의 앞 뒤에 존재하는 공백문자를 제거합니다.
@@ -90,7 +93,13 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 		html = pattern.web.strip_forms(html)
 		html = pattern.web.strip_comments(html)
 		html = html.replace("\r", "\n")
-		html = pattern.web.strip_tags(html, exclude=[], replace=pattern.web.blocks)
+		if replace is None:
+			replace = pattern.web.blocks
+		else:
+			buffer = pattern.web.blocks.copy()
+			buffer.update(replace)
+			replace = buffer
+		html = pattern.web.strip_tags(html, exclude=[], replace=replace)
 		html = pattern.web.decode_entities(html)
 		html = pattern.web.collapse_spaces(html, True)
 		text = pattern.web.collapse_tabs(html, True)
@@ -102,6 +111,6 @@ def toText(html, converter='pattern.web', linebreaks=10, strip=False) :
 	
 	raise ValueError(
 		b"'{converter}'는 지원하지 않는 변환기입니다.".format(
-			converter=converter
+			converter = converter
 		)
 	)

@@ -8,7 +8,7 @@
 from __future__ import unicode_literals, absolute_import, division, print_function
 import inspect
 
-class ClassPropertyDescriptor(object):
+class ClassProperty(object):
 	def __init__(self, fget, fset=None):
 		self.fget = fget
 		self.fset = fset
@@ -39,7 +39,7 @@ class ClassPropertyMetaClass(type):
 	def __setattr__(self, key, value):
 		if key in self.__dict__:
 			obj = self.__dict__.get(key)
-			if obj and type(obj) is ClassPropertyDescriptor:
+			if obj and type(obj) is ClassProperty:
 				return obj.__set__(self, value)
 		super(ClassPropertyMetaClass, self).__setattr__(key, value)
 	
@@ -76,10 +76,10 @@ def classproperty(function):
 	:param function: 함수
 	:type function: function
 	:return: class property
-	:rtype: :py:class:`ClassPropertyDescriptor`
+	:rtype: :py:class:`ClassProperty`
 	"""
 	if not isinstance(function, (classmethod, staticmethod)):
 		function = classmethod(function)
 	
-	return ClassPropertyDescriptor(function)
+	return ClassProperty(function)
 	

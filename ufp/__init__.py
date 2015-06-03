@@ -4,7 +4,7 @@
 from __future__ import unicode_literals, absolute_import
 
 __title__ = 'ufp'
-__version__ = '1.10.1'
+__version__ = '1.12'
 __author__ = '별님'
 __author_email__ = 'w7dn1ng75r@gmail.com'
 __license__ = 'GPL v3'

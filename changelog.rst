@@ -1,6 +1,21 @@
 ﻿변경사항
 ==============
 
+v1.12
+-------
+
++ descriptor 모듈에 cached_property를 추가함. [`tb69wn6127`_]
++ pyqt4 모듈을 추가함. [`tb69wn6127`_]
+	+ QNetworkCookie 모듈을 추가함. [`tb69wn6127`_]
+		+ toPyCookie 함수 추가함. [`tb69wn6127`_]
+	+ QNetworkCookieJar 모듈을 추가함. [`tb69wn6127`_]
+		+ toPyCookieJar 함수를 추가함. [`tb69wn6127`_]
+
+v1.11
+-------
+
++ ufp.html 모듈의 toText 함수에 replace 옵션을 추가함. [`tb69wn6127`_]
+
 v1.10.1
 -------
 

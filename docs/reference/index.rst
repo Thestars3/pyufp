@@ -13,6 +13,7 @@
 	pdf
 	math
 	list
+	pyqt4
 	descriptor
 	bs4
 	random
