@@ -44,14 +44,6 @@ def make_object(type_name, values=[], orderd_items=[], items={}, **kwargs):
 	:return: u'{type_name}({value}, ..., {key}={value}, ...)'
 	:rtype: unicode
 	"""
-	#형식명 설정
-	if isinstance(type_name, unicode):
-		pass
-	elif isinstance(type_name, object):
-		type_name = type(type_name).__name__
-	else:
-		type_name = type_name.__class__.__name__
-	
 	#값 목록 작성
 	def convert(value):
 		if isinstance(value, unicode):
