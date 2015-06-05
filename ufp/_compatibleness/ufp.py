@@ -3,8 +3,9 @@
 
 from __future__ import unicode_literals, absolute_import, division, print_function
 
-from . import color
+from ..repr import make_object as make_repr
 
 #호환 설정
-from ... import terminal
-terminal.color = color
+from .. import ufp as b
+b.make_repr = make_repr
+b.__all__.append('make_repr')

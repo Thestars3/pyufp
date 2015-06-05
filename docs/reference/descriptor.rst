@@ -5,3 +5,4 @@
 ==========================
 
 .. autofunction:: ufp.descriptor.classproperty
+.. autoclass:: ufp.descriptor.CachedProperty

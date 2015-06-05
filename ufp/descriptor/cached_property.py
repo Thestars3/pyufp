@@ -50,19 +50,11 @@ class CachedProperty(object):
 		self.__doc__ = method.__doc__
 		self.name = method.__name__
 		
-	def setter(self, method):
-		self.fset = method
-		return self
-	
-	def deleter(self, method):
-		self.fdel = method
-		return self
-	
 	def __get__(self, instance, cls): 
 		if instance is None:
 			return self
 		
-		if self.name in instance.__dict__:
+		if self.is_seted(instance, self.name):
 			return instance.__dict__[self.name]
 		
 		value = self.fget(instance)
@@ -77,7 +69,28 @@ class CachedProperty(object):
 	def __delete__(self, instance):
 		if self.fdel:
 			self.fdel(instance)
-		if self.name in instance.__dict__:
+		if self.is_seted(instance, self.name):
 			del instance.__dict__[self.name]
 		pass
+	
+	def setter(self, method):
+		self.fset = method
+		return self
+	
+	def deleter(self, method):
+		self.fdel = method
+		return self
+	
+	@classmethod
+	def is_seted(cls, instance, name):
+		"""
+		주어진 instance에 name 속성이 불러와졌는지 확인합니다.
+		
+		:param instance: 인스턴스.
+		:param name: 속성 명.
+		:type name: str, unicode
+		:return: 불러왔는지 여부.
+		:rtype: bool
+		"""
+		return name in instance.__dict__
 	

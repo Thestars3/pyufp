@@ -13,7 +13,8 @@
 	pdf
 	math
 	list
-	pyqt4
+	repr
+	pyqt4/index
 	descriptor
 	bs4
 	random

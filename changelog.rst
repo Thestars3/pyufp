@@ -1,6 +1,14 @@
 ﻿변경사항
 ==============
 
+v1.13
+-------
+
++ descriptor 모듈의 CachedProperty 클래스에 is_seted 메소드를 추가함. [`tb69wn6127`_]
++ repr 모듈을 추가. [`tb69wn6127`_]
+	+ ufp.make_repr 함수를 repr 모듈에 make_object라는 이름으로 이동. [`tb69wn6127`_]
+	+ make_type 함수를 추가. [`tb69wn6127`_]
+
 v1.12
 -------
 
