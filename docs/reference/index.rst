@@ -14,6 +14,8 @@
 	math
 	list
 	repr
+	logging
+	process
 	pyqt4/index
 	descriptor
 	bs4

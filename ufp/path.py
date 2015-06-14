@@ -14,6 +14,7 @@ def remove(path, force=False):
 	"""
 	주어진 경로에 존재하는 대상을 삭제합니다.
 	
+	심볼릭 링크는 링크를 제거합니다. 
 	폴더의 경우 재귀적으로 폴더 내용을 삭제한뒤 폴더를 삭제합니다.
 	
 	:param path: 삭제 대상의 경로
@@ -24,7 +25,9 @@ def remove(path, force=False):
 	:type force: bool
 	"""
 	try:
-		if os.path.isdir(path):
+		if os.path.islink(path):
+			os.unlink(path)
+		elif os.path.isdir(path):
 			shutil.rmtree(path, force)
 		else:
 			os.remove(path)
@@ -70,7 +73,22 @@ def walk(top, maxDepth=None, onerror=None, followlinks=False):
 		if maxDepth is not None and num_sep + maxDepth <= root.count(os.path.sep):
 			del dirs[:]
 	pass
+
+def remove_all_content(dir, force=False):
+	"""
+	dir에 존재하는 모든 요소를 삭제합니다.
 	
+	:param dir: 삭제 할 대상 파일들이 담긴 폴더
+	:type dir: unicode
+	:param force: 오류를 무시할지 여부.\n
+		True : 오류를 무시함.\n
+		False : Exception이 발생하면, 그대로 던짐.
+	:type force: bool
+	"""
+	for file in os.listdir(dir):
+		remove(file, force=force)
+	pass
+
 def moveAllContent(dirPath, destPath):
 	"""
 	dirPath에 존재하는 모든 파일을 destPath로 옮깁니다.
@@ -122,8 +140,7 @@ def mtime(path, format):
 	:rtype: unicode
 	"""
 	buffer = os.path.getmtime(path)
-	buffer = datetime.fromtimestamp(buffer).strftime(format)
-	return buffer
+	return datetime.datetime.fromtimestamp(buffer).strftime(format)
 	
 def pjoin(parentPath, filenames):
 	"""
@@ -179,7 +196,7 @@ def listdir(path, **options):
 		
 		#만약 패턴이 문자열이라면 리스트에 담기.
 		if isinstance(pattern, unicode):
-			pattern = list(pattern)
+			pattern = [pattern]
 		
 		#패턴 컴파일
 		pattern = map(lambda x: re.compile(x, re.IGNORECASE), pattern)
@@ -226,7 +243,8 @@ def toUrl(path):
 	:return: file:///형식으로된 주소
 	:rtype: unicode
 	"""
-	buffer = urllib.pathname2url(path.encode('UTF-8'))
+	buffer = path.encode('UTF-8')
+	buffer = urllib.pathname2url(buffer)
 	return urlparse.urljoin('file:', buffer)
 
 def replaceSpiecalChar(string, **options) :
@@ -264,7 +282,7 @@ def replaceSpiecalChar(string, **options) :
 		("'", "＇"),
 		("$", "＄"),
 		("!", "！")
-	];
+	]
 	
 	#옵션 초기값 설정
 	options.setdefault('type', 'unix')
@@ -272,21 +290,21 @@ def replaceSpiecalChar(string, **options) :
 	
 	#옵션 처리
 	regexs = DEFAULT_REGEXS
-	if options['type'] == 'unix' :
-		regexs.append(ESCAPE_CHARTER_UNIX_TYPE_RE);
-		if not options['keep_path_characters'] :
-			regexs += [UNIX_PATH_CHARACTER_RE];
-	elif options['type'] == 'windows' :
-		regexs += [UNIX_PATH_CHARACTER_RE];
-		if not options['keep_path_characters'] :
-			regexs += [WINDOWS_PATH_CHARACTER_RE];
+	if options['type'] == 'unix':
+		regexs.append(ESCAPE_CHARTER_UNIX_TYPE_RE)
+		if not options['keep_path_characters']:
+			regexs += [UNIX_PATH_CHARACTER_RE]
+	elif options['type'] == 'windows':
+		regexs += [UNIX_PATH_CHARACTER_RE]
+		if not options['keep_path_characters']:
+			regexs += [WINDOWS_PATH_CHARACTER_RE]
 	
-	for before, after in regexs :
-		string = string.replace(before, after);
+	for before, after in regexs:
+		string = string.replace(before, after)
 	
-	return string;
+	return string
 
-def dirname(path) :
+def dirname(path):
 	"""
 	주어진 경로의 부모 경로를 추출해냅니다.
 	

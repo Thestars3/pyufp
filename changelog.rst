@@ -1,6 +1,20 @@
 ﻿변경사항
 ==============
 
+v1.14
+-------
+
++ ufp.path 모듈에 remove_all_content 함수를 추가. [`tb69wn6127`_]
++ ufp.path.listdir 함수에서 pattern을 string으로 지정할시 발생하던 'sre_constants.error: bogus escape (end of line)' 오류 수정. [`tb69wn6127`_]
++ ufp.path.remove 함수를 통해 심볼릭 링크가 있는 경로를 지우려 할 경우 발생하던 'OSError: Cannot call rmtree on a symbolic link' 오류를 수정. [`tb69wn6127`_]
++ ufp.path.mtime 함수에서 발생하던 "AttributeError: 'module' object has no attribute 'fromtimestamp'" 오류 수정. [`tb69wn6127`_]
++ ufp.process 모듈을 추가함. [`tb69wn6127`_]
+	+ pgrep 함수 추가됨. [`tb69wn6127`_]
+	+ pkill 함수 추가됨. [`tb69wn6127`_]
+	+ nohup 함수 추가됨. [`tb69wn6127`_]
++ ufp.logging 모듈을 추가함. [`tb69wn6127`_]
+	+ StreamLogger 클래스 추가됨. [`tb69wn6127`_]
+
 v1.13.1
 -------
 
